@@ -1,0 +1,53 @@
+const API_URL = import.meta.env.VITE_API_URL || '/api'
+
+async function request(path, options = {}) {
+  const headers = { 'Content-Type': 'application/json', ...options.headers }
+  const res = await fetch(`${API_URL}${path}`, { ...options, headers, credentials: 'include' })
+  if (res.status === 401) {
+    localStorage.removeItem('crabstack_user')
+    window.location.href = '/admin/login'
+    throw new Error('Unauthorized')
+  }
+  return res.json()
+}
+
+export const api = {
+  login: async (username, password) => {
+    const res = await fetch(`${API_URL}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+      credentials: 'include',
+    })
+    const data = await res.json()
+    if (res.status === 401) {
+      throw new Error(data.error || 'Invalid credentials')
+    }
+    return data
+  },
+
+  logout: () =>
+    request('/logout', { method: 'POST' }),
+
+  get: (path) => request(path),
+  post: (path, data) => request(path, { method: 'POST', body: JSON.stringify(data) }),
+  put: (path, data) => request(path, { method: 'PUT', body: JSON.stringify(data) }),
+  patch: (path, data) => request(path, { method: 'PATCH', body: JSON.stringify(data) }),
+  delete: (path) => request(path, { method: 'DELETE' }),
+
+  upload: async (file, alt = '') => {
+    const form = new FormData()
+    form.append('file', file)
+    form.append('alt', alt)
+    const res = await fetch(`${API_URL}/upload`, {
+      method: 'POST',
+      credentials: 'include',
+      body: form,
+    })
+    if (res.status === 401) {
+      localStorage.removeItem('crabstack_user')
+      window.location.href = '/admin/login'
+    }
+    return res.json()
+  }
+}
