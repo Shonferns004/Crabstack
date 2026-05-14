@@ -1,18 +1,27 @@
 import { useState, useEffect, useRef } from 'react'
 import { api } from '../api'
+import { SkeletonRow } from '../../components/Skeleton'
 
 export default function Projects() {
   const [items, setItems] = useState([])
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState({ title: '', description: '', image_url: '', tags: '', client_name: '', sort_order: 0 })
   const [uploading, setUploading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const fileRef = useRef()
 
   useEffect(() => { load() }, [])
 
   const load = async () => {
-    const data = await api.get('/projects')
-    setItems(data)
+    try {
+      setLoading(true)
+      const data = await api.get('/projects')
+      setItems(data)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const openNew = () => {
@@ -107,35 +116,41 @@ export default function Projects() {
               <th className="p-4 font-medium w-24">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            {items.map(item => (
-              <tr key={item.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/30">
-                <td className="p-4">
-                  {item.image_url ? (
-                    <img src={item.image_url} alt="" className="w-10 h-10 rounded object-cover bg-zinc-800" />
-                  ) : (
-                    <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-zinc-600">
-                      <span className="material-symbols-outlined text-lg">image</span>
+          {loading ? (
+            <tbody>
+              {Array.from({ length: 5 }).map((_, i) => <SkeletonRow key={i} cols={5} />)}
+            </tbody>
+          ) : (
+            <tbody>
+              {items.map(item => (
+                <tr key={item.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/30">
+                  <td className="p-4">
+                    {item.image_url ? (
+                      <img src={item.image_url} alt="" className="w-10 h-10 rounded object-cover bg-zinc-800" />
+                    ) : (
+                      <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-zinc-600">
+                        <span className="material-symbols-outlined text-lg">image</span>
+                      </div>
+                    )}
+                  </td>
+                  <td className="p-4">{item.title}</td>
+                  <td className="p-4 text-zinc-400 hidden md:table-cell">{item.client_name || '-'}</td>
+                  <td className="p-4 hidden lg:table-cell">
+                    <div className="flex gap-1 flex-wrap">
+                      {item.tags?.map(t => <span key={t} className="text-[10px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-400">{t}</span>)}
                     </div>
-                  )}
-                </td>
-                <td className="p-4">{item.title}</td>
-                <td className="p-4 text-zinc-400 hidden md:table-cell">{item.client_name || '-'}</td>
-                <td className="p-4 hidden lg:table-cell">
-                  <div className="flex gap-1 flex-wrap">
-                    {item.tags?.map(t => <span key={t} className="text-[10px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-400">{t}</span>)}
-                  </div>
-                </td>
-                <td className="p-4">
-                  <div className="flex gap-2">
-                    <button onClick={() => openEdit(item)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
-                    <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {items.length === 0 && <tr><td colSpan={5} className="p-8 text-center text-zinc-500">No projects yet</td></tr>}
-          </tbody>
+                  </td>
+                  <td className="p-4">
+                    <div className="flex gap-2">
+                      <button onClick={() => openEdit(item)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
+                      <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {items.length === 0 && <tr><td colSpan={5} className="p-8 text-center text-zinc-500">No projects yet</td></tr>}
+            </tbody>
+          )}
         </table>
       </div>
     </div>

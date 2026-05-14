@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
+import { SkeletonRow } from '../../components/Skeleton'
 
 export default function Blog() {
   const [posts, setPosts] = useState([])
@@ -8,11 +9,27 @@ export default function Blog() {
   const [showCategory, setShowCategory] = useState(false)
   const [catForm, setCatForm] = useState({ name: '', slug: '' })
   const [form, setForm] = useState({ title: '', slug: '', content: '', excerpt: '', image_url: '', category_id: '', author: '', published: false })
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => { load(); loadCategories() }, [])
 
-  const load = async () => { setPosts(await api.get('/blog')) }
-  const loadCategories = async () => { setCategories(await api.get('/blog/categories')) }
+  const load = async () => {
+    try {
+      setLoading(true)
+      setPosts(await api.get('/blog'))
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
+  }
+  const loadCategories = async () => {
+    try {
+      setCategories(await api.get('/blog/categories'))
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   const openNew = () => {
     setEditing('new')
@@ -111,26 +128,32 @@ export default function Blog() {
               <th className="p-4 font-medium w-24">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            {posts.map(post => (
-              <tr key={post.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/30">
-                <td className="p-4">{post.title}</td>
-                <td className="p-4 text-zinc-400 hidden md:table-cell">{post.author || '-'}</td>
-                <td className="p-4 hidden lg:table-cell">
-                  <span className={`text-[10px] px-2 py-0.5 rounded ${post.published ? 'bg-green-500/10 text-green-400' : 'bg-zinc-800 text-zinc-500'}`}>
-                    {post.published ? 'Published' : 'Draft'}
-                  </span>
-                </td>
-                <td className="p-4">
-                  <div className="flex gap-2">
-                    <button onClick={() => openEdit(post)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
-                    <button onClick={() => remove(post.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {posts.length === 0 && <tr><td colSpan={4} className="p-8 text-center text-zinc-500">No posts yet</td></tr>}
-          </tbody>
+          {loading ? (
+            <tbody>
+              {Array.from({ length: 5 }).map((_, i) => <SkeletonRow key={i} cols={4} />)}
+            </tbody>
+          ) : (
+            <tbody>
+              {posts.map(post => (
+                <tr key={post.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/30">
+                  <td className="p-4">{post.title}</td>
+                  <td className="p-4 text-zinc-400 hidden md:table-cell">{post.author || '-'}</td>
+                  <td className="p-4 hidden lg:table-cell">
+                    <span className={`text-[10px] px-2 py-0.5 rounded ${post.published ? 'bg-green-500/10 text-green-400' : 'bg-zinc-800 text-zinc-500'}`}>
+                      {post.published ? 'Published' : 'Draft'}
+                    </span>
+                  </td>
+                  <td className="p-4">
+                    <div className="flex gap-2">
+                      <button onClick={() => openEdit(post)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
+                      <button onClick={() => remove(post.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {posts.length === 0 && <tr><td colSpan={4} className="p-8 text-center text-zinc-500">No posts yet</td></tr>}
+            </tbody>
+          )}
         </table>
       </div>
     </div>

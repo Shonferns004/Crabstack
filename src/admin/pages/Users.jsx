@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
+import { SkeletonRow } from '../../components/Skeleton'
 
 export default function Users() {
   const [items, setItems] = useState([])
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState({ username: '', password: '', role: 'admin' })
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => { load() }, [])
 
   const load = async () => {
-    const data = await api.get('/users')
-    setItems(data)
+    try {
+      setLoading(true)
+      const data = await api.get('/users')
+      setItems(data)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const openNew = () => {
@@ -67,24 +76,30 @@ export default function Users() {
               <th className="p-4 font-medium w-24">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            {items.map(item => (
-              <tr key={item.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/30">
-                <td className="p-4 font-medium">{item.username}</td>
-                <td className="p-4">
-                  <span className="text-[10px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-400">{item.role}</span>
-                </td>
-                <td className="p-4 text-zinc-400 hidden md:table-cell">{new Date(item.created_at).toLocaleDateString()}</td>
-                <td className="p-4">
-                  <div className="flex gap-2">
-                    <button onClick={() => { setEditing(item.id); setForm({ username: item.username, password: '', role: item.role }) }} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
-                    <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {items.length === 0 && <tr><td colSpan={4} className="p-8 text-center text-zinc-500">No users</td></tr>}
-          </tbody>
+          {loading ? (
+            <tbody>
+              {Array.from({ length: 5 }).map((_, i) => <SkeletonRow key={i} cols={4} />)}
+            </tbody>
+          ) : (
+            <tbody>
+              {items.map(item => (
+                <tr key={item.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/30">
+                  <td className="p-4 font-medium">{item.username}</td>
+                  <td className="p-4">
+                    <span className="text-[10px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-400">{item.role}</span>
+                  </td>
+                  <td className="p-4 text-zinc-400 hidden md:table-cell">{new Date(item.created_at).toLocaleDateString()}</td>
+                  <td className="p-4">
+                    <div className="flex gap-2">
+                      <button onClick={() => { setEditing(item.id); setForm({ username: item.username, password: '', role: item.role }) }} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
+                      <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {items.length === 0 && <tr><td colSpan={4} className="p-8 text-center text-zinc-500">No users</td></tr>}
+            </tbody>
+          )}
         </table>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
+import { SkeletonRow } from '../../components/Skeleton'
 
 const icons = ['code', 'palette', 'trending_up', 'campaign', 'search', 'architecture', 'rocket_launch', 'design_services', 'support', 'settings']
 
@@ -7,12 +8,20 @@ export default function Services() {
   const [items, setItems] = useState([])
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState({ icon: 'code', title: '', description: '', sort_order: 0 })
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => { load() }, [])
 
   const load = async () => {
-    const data = await api.get('/services')
-    setItems(data)
+    try {
+      setLoading(true)
+      const data = await api.get('/services')
+      setItems(data)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const openNew = () => {
@@ -70,22 +79,36 @@ export default function Services() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {items.map(item => (
-          <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex gap-4">
-            <span className="material-symbols-outlined text-primary text-3xl">{item.icon}</span>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-bold">{item.title}</h3>
-              <p className="text-zinc-500 text-sm mt-1 line-clamp-2">{item.description}</p>
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex gap-4 animate-pulse">
+              <div className="size-8 bg-zinc-800 rounded" />
+              <div className="flex-1 space-y-2">
+                <div className="h-4 bg-zinc-800 rounded w-1/3" />
+                <div className="h-3 bg-zinc-800 rounded w-2/3" />
+              </div>
             </div>
-            <div className="flex gap-1">
-              <button onClick={() => openEdit(item)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
-              <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {items.map(item => (
+            <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex gap-4">
+              <span className="material-symbols-outlined text-primary text-3xl">{item.icon}</span>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold">{item.title}</h3>
+                <p className="text-zinc-500 text-sm mt-1 line-clamp-2">{item.description}</p>
+              </div>
+              <div className="flex gap-1">
+                <button onClick={() => openEdit(item)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
+                <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
+              </div>
             </div>
-          </div>
-        ))}
-        {items.length === 0 && <div className="col-span-2 text-center text-zinc-500 py-12">No services yet</div>}
-      </div>
+          ))}
+          {items.length === 0 && <div className="col-span-2 text-center text-zinc-500 py-12">No services yet</div>}
+        </div>
+      )}
     </div>
   )
 }

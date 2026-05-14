@@ -1,15 +1,24 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
+import { SkeletonRow } from '../../components/Skeleton'
 
 export default function Messages() {
   const [items, setItems] = useState([])
   const [selected, setSelected] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => { load() }, [])
 
   const load = async () => {
-    const data = await api.get('/contacts')
-    setItems(data)
+    try {
+      setLoading(true)
+      const data = await api.get('/contacts')
+      setItems(data)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const markRead = async (id) => {
@@ -28,18 +37,29 @@ export default function Messages() {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 space-y-2">
-          {items.map(item => (
-            <div key={item.id} onClick={() => { setSelected(item); if (!item.is_read) markRead(item.id) }} className={`cursor-pointer bg-zinc-900 border rounded-xl p-4 transition-colors ${selected?.id === item.id ? 'border-primary' : 'border-zinc-800 hover:border-zinc-600'} ${!item.is_read ? 'border-l-primary border-l-4' : ''}`}>
-              <div className="flex items-center gap-2">
-                {!item.is_read && <span className="size-2 rounded-full bg-primary shrink-0" />}
-                <h3 className="font-bold text-sm truncate">{item.name}</h3>
+          {loading ? (
+            Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2 animate-pulse">
+                <div className="h-4 bg-zinc-800 rounded w-1/2" />
+                <div className="h-3 bg-zinc-800 rounded w-2/3" />
+                <div className="h-3 bg-zinc-800 rounded w-3/4" />
               </div>
-              <p className="text-zinc-500 text-xs mt-1">{item.email}</p>
-              <p className="text-zinc-500 text-sm mt-2 line-clamp-2">{item.message}</p>
-              <p className="text-zinc-600 text-[10px] mt-2">{new Date(item.created_at).toLocaleDateString()}</p>
-            </div>
-          ))}
-          {items.length === 0 && <div className="text-center text-zinc-500 py-8">No messages yet</div>}
+            ))
+          ) : items.length === 0 ? (
+            <div className="text-center text-zinc-500 py-8">No messages yet</div>
+          ) : (
+            items.map(item => (
+              <div key={item.id} onClick={() => { setSelected(item); if (!item.is_read) markRead(item.id) }} className={`cursor-pointer bg-zinc-900 border rounded-xl p-4 transition-colors ${selected?.id === item.id ? 'border-primary' : 'border-zinc-800 hover:border-zinc-600'} ${!item.is_read ? 'border-l-primary border-l-4' : ''}`}>
+                <div className="flex items-center gap-2">
+                  {!item.is_read && <span className="size-2 rounded-full bg-primary shrink-0" />}
+                  <h3 className="font-bold text-sm truncate">{item.name}</h3>
+                </div>
+                <p className="text-zinc-500 text-xs mt-1">{item.email}</p>
+                <p className="text-zinc-500 text-sm mt-2 line-clamp-2">{item.message}</p>
+                <p className="text-zinc-600 text-[10px] mt-2">{new Date(item.created_at).toLocaleDateString()}</p>
+              </div>
+            ))
+          )}
         </div>
         <div className="lg:col-span-2">
           {selected ? (

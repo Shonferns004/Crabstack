@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
+import { SkeletonRow } from '../../components/Skeleton'
 
 export default function Testimonials() {
   const [items, setItems] = useState([])
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState({ quote: '', name: '', role: '', sort_order: 0 })
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => { load() }, [])
 
   const load = async () => {
-    const data = await api.get('/testimonials')
-    setItems(data)
+    try {
+      setLoading(true)
+      const data = await api.get('/testimonials')
+      setItems(data)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const openNew = () => { setEditing('new'); setForm({ quote: '', name: '', role: '', sort_order: items.length }) }
@@ -46,23 +55,37 @@ export default function Testimonials() {
           </div>
         </div>
       )}
-      <div className="space-y-3">
-        {items.map(item => (
-          <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex items-start gap-4">
-            <span className="material-symbols-outlined text-primary text-2xl mt-1">format_quote</span>
-            <div className="flex-1 min-w-0">
-              <p className="italic text-zinc-300">{item.quote}</p>
-              <p className="text-sm font-bold mt-2">{item.name}</p>
-              {item.role && <p className="text-xs text-zinc-500">{item.role}</p>}
+      {loading ? (
+        <div className="space-y-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex items-start gap-4 animate-pulse">
+              <div className="size-6 bg-zinc-800 rounded mt-1" />
+              <div className="flex-1 space-y-2">
+                <div className="h-4 bg-zinc-800 rounded w-2/3" />
+                <div className="h-3 bg-zinc-800 rounded w-1/4" />
+              </div>
             </div>
-            <div className="flex gap-1 shrink-0">
-              <button onClick={() => openEdit(item)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
-              <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
+          ))}
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {items.map(item => (
+            <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex items-start gap-4">
+              <span className="material-symbols-outlined text-primary text-2xl mt-1">format_quote</span>
+              <div className="flex-1 min-w-0">
+                <p className="italic text-zinc-300">{item.quote}</p>
+                <p className="text-sm font-bold mt-2">{item.name}</p>
+                {item.role && <p className="text-xs text-zinc-500">{item.role}</p>}
+              </div>
+              <div className="flex gap-1 shrink-0">
+                <button onClick={() => openEdit(item)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
+                <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
+              </div>
             </div>
-          </div>
-        ))}
-        {items.length === 0 && <div className="text-center text-zinc-500 py-12">No testimonials yet</div>}
-      </div>
+          ))}
+          {items.length === 0 && <div className="text-center text-zinc-500 py-12">No testimonials yet</div>}
+        </div>
+      )}
     </div>
   )
 }

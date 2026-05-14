@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
+import { SkeletonRow } from '../../components/Skeleton'
 
 export default function FAQ() {
   const [items, setItems] = useState([])
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState({ question: '', answer: '', sort_order: 0 })
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => { load() }, [])
 
   const load = async () => {
-    const data = await api.get('/faq')
-    setItems(data)
+    try {
+      setLoading(true)
+      const data = await api.get('/faq')
+      setItems(data)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const openNew = () => { setEditing('new'); setForm({ question: '', answer: '', sort_order: items.length }) }
@@ -45,23 +54,36 @@ export default function FAQ() {
           </div>
         </div>
       )}
-      <div className="space-y-2">
-        {items.map(item => (
-          <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
-            <div className="flex items-start gap-4">
-              <div className="flex-1">
-                <h3 className="font-bold text-primary">{item.question}</h3>
-                <p className="text-zinc-400 text-sm mt-2">{item.answer}</p>
-              </div>
-              <div className="flex gap-1 shrink-0">
-                <button onClick={() => openEdit(item)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
-                <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
+      {loading ? (
+        <div className="space-y-2">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 animate-pulse">
+              <div className="space-y-2">
+                <div className="h-4 bg-zinc-800 rounded w-1/2" />
+                <div className="h-3 bg-zinc-800 rounded w-3/4" />
               </div>
             </div>
-          </div>
-        ))}
-        {items.length === 0 && <div className="text-center text-zinc-500 py-12">No FAQ items yet</div>}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="space-y-2">
+          {items.map(item => (
+            <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
+              <div className="flex items-start gap-4">
+                <div className="flex-1">
+                  <h3 className="font-bold text-primary">{item.question}</h3>
+                  <p className="text-zinc-400 text-sm mt-2">{item.answer}</p>
+                </div>
+                <div className="flex gap-1 shrink-0">
+                  <button onClick={() => openEdit(item)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
+                  <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
+                </div>
+              </div>
+            </div>
+          ))}
+          {items.length === 0 && <div className="text-center text-zinc-500 py-12">No FAQ items yet</div>}
+        </div>
+      )}
     </div>
   )
 }

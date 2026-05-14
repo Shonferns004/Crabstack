@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
+import { SkeletonCard } from '../../components/Skeleton'
 
 export default function Dashboard() {
-  const [stats, setStats] = useState({ projects: 0, messages: 0, subscribers: 0, bookings: 0, services: 0, testimonials: 0, blog: 0, clients: 0 })
+  const [stats, setStats] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    setLoading(true)
     Promise.all([
       api.get('/projects').catch(() => []),
       api.get('/contacts?unread=true').catch(() => []),
@@ -25,7 +28,7 @@ export default function Dashboard() {
         blog: Array.isArray(blog) ? blog.length : 0,
         clients: Array.isArray(clients) ? clients.length : 0,
       })
-    })
+    }).finally(() => setLoading(false))
   }, [])
 
   const cards = [

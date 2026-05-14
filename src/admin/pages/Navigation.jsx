@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
+import { SkeletonRow } from '../../components/Skeleton'
 
 export default function Navigation() {
   const [items, setItems] = useState([])
   const [newLabel, setNewLabel] = useState('')
   const [newUrl, setNewUrl] = useState('')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => { load() }, [])
 
   const load = async () => {
-    const data = await api.get('/navigation')
-    setItems(data.sort((a, b) => a.sort_order - b.sort_order))
+    try {
+      setLoading(true)
+      const data = await api.get('/navigation')
+      setItems(data.sort((a, b) => a.sort_order - b.sort_order))
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const addItem = async () => {
@@ -57,23 +66,41 @@ export default function Navigation() {
         </div>
       </div>
 
-      <div className="space-y-2">
-        {items.map((item, i) => (
-          <div key={item.id || i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex items-center gap-4">
-            <div className="flex flex-col gap-0.5">
-              <button onClick={() => moveUp(i)} disabled={i === 0} className="text-zinc-500 hover:text-white disabled:opacity-30"><span className="material-symbols-outlined text-sm">keyboard_arrow_up</span></button>
-              <button onClick={() => moveDown(i)} disabled={i === items.length - 1} className="text-zinc-500 hover:text-white disabled:opacity-30"><span className="material-symbols-outlined text-sm">keyboard_arrow_down</span></button>
+      {loading ? (
+        <div className="space-y-2">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex items-center gap-4 animate-pulse">
+              <div className="flex flex-col gap-0.5">
+                <div className="size-4 bg-zinc-800 rounded" />
+                <div className="size-4 bg-zinc-800 rounded" />
+              </div>
+              <div className="size-5 bg-zinc-800 rounded" />
+              <div className="flex-1 space-y-1">
+                <div className="h-4 bg-zinc-800 rounded w-1/4" />
+                <div className="h-3 bg-zinc-800 rounded w-1/3" />
+              </div>
             </div>
-            <span className="material-symbols-outlined text-zinc-500">drag_indicator</span>
-            <div className="flex-1 min-w-0">
-              <div className="font-bold">{item.label}</div>
-              <div className="text-zinc-500 text-xs font-mono">{item.url}</div>
+          ))}
+        </div>
+      ) : (
+        <div className="space-y-2">
+          {items.map((item, i) => (
+            <div key={item.id || i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex items-center gap-4">
+              <div className="flex flex-col gap-0.5">
+                <button onClick={() => moveUp(i)} disabled={i === 0} className="text-zinc-500 hover:text-white disabled:opacity-30"><span className="material-symbols-outlined text-sm">keyboard_arrow_up</span></button>
+                <button onClick={() => moveDown(i)} disabled={i === items.length - 1} className="text-zinc-500 hover:text-white disabled:opacity-30"><span className="material-symbols-outlined text-sm">keyboard_arrow_down</span></button>
+              </div>
+              <span className="material-symbols-outlined text-zinc-500">drag_indicator</span>
+              <div className="flex-1 min-w-0">
+                <div className="font-bold">{item.label}</div>
+                <div className="text-zinc-500 text-xs font-mono">{item.url}</div>
+              </div>
+              <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
             </div>
-            <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
-          </div>
-        ))}
-        {items.length === 0 && <div className="text-center text-zinc-500 py-8">No navigation items yet</div>}
-      </div>
+          ))}
+          {items.length === 0 && <div className="text-center text-zinc-500 py-8">No navigation items yet</div>}
+        </div>
+      )}
     </div>
   )
 }

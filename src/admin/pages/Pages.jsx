@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
+import { SkeletonRow } from '../../components/Skeleton'
 
 export default function Pages() {
   const [items, setItems] = useState([])
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState({ title: '', slug: '', content: '', meta_title: '', meta_description: '', published: false })
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => { load() }, [])
 
   const load = async () => {
-    const data = await api.get('/pages')
-    setItems(data)
+    try {
+      setLoading(true)
+      const data = await api.get('/pages')
+      setItems(data)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const openNew = () => { setEditing('new'); setForm({ title: '', slug: '', content: '', meta_title: '', meta_description: '', published: false }) }
@@ -64,26 +73,32 @@ export default function Pages() {
               <th className="p-4 font-medium w-24">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            {items.map(item => (
-              <tr key={item.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/30">
-                <td className="p-4">{item.title}</td>
-                <td className="p-4 text-zinc-400 font-mono text-xs hidden md:table-cell">/{item.slug}</td>
-                <td className="p-4 hidden lg:table-cell">
-                  <span className={`text-[10px] px-2 py-0.5 rounded ${item.published ? 'bg-green-500/10 text-green-400' : 'bg-zinc-800 text-zinc-500'}`}>
-                    {item.published ? 'Published' : 'Draft'}
-                  </span>
-                </td>
-                <td className="p-4">
-                  <div className="flex gap-2">
-                    <button onClick={() => openEdit(item)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
-                    <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {items.length === 0 && <tr><td colSpan={4} className="p-8 text-center text-zinc-500">No custom pages yet</td></tr>}
-          </tbody>
+          {loading ? (
+            <tbody>
+              {Array.from({ length: 5 }).map((_, i) => <SkeletonRow key={i} cols={4} />)}
+            </tbody>
+          ) : (
+            <tbody>
+              {items.map(item => (
+                <tr key={item.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/30">
+                  <td className="p-4">{item.title}</td>
+                  <td className="p-4 text-zinc-400 font-mono text-xs hidden md:table-cell">/{item.slug}</td>
+                  <td className="p-4 hidden lg:table-cell">
+                    <span className={`text-[10px] px-2 py-0.5 rounded ${item.published ? 'bg-green-500/10 text-green-400' : 'bg-zinc-800 text-zinc-500'}`}>
+                      {item.published ? 'Published' : 'Draft'}
+                    </span>
+                  </td>
+                  <td className="p-4">
+                    <div className="flex gap-2">
+                      <button onClick={() => openEdit(item)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
+                      <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {items.length === 0 && <tr><td colSpan={4} className="p-8 text-center text-zinc-500">No custom pages yet</td></tr>}
+            </tbody>
+          )}
         </table>
       </div>
     </div>

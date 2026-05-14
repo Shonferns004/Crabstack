@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api'
+import { SkeletonRow } from '../../components/Skeleton'
 
 const statusColors = { draft: 'bg-zinc-800 text-zinc-400', sent: 'bg-blue-500/10 text-blue-400', paid: 'bg-green-500/10 text-green-400', overdue: 'bg-red-500/10 text-red-400' }
 
@@ -7,12 +8,20 @@ export default function Invoices() {
   const [items, setItems] = useState([])
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState({ client_name: '', project_name: '', amount: '', status: 'draft', file_url: '', notes: '' })
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => { load() }, [])
 
   const load = async () => {
-    const data = await api.get('/invoices')
-    setItems(data)
+    try {
+      setLoading(true)
+      const data = await api.get('/invoices')
+      setItems(data)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const openNew = () => { setEditing('new'); setForm({ client_name: '', project_name: '', amount: '', status: 'draft', file_url: '', notes: '' }) }
@@ -67,23 +76,29 @@ export default function Invoices() {
               <th className="p-4 font-medium w-24">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            {items.map(item => (
-              <tr key={item.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/30">
-                <td className="p-4">{item.client_name}</td>
-                <td className="p-4 text-zinc-400 hidden md:table-cell">{item.project_name || '-'}</td>
-                <td className="p-4">{item.amount ? `₹${Number(item.amount).toLocaleString()}` : '-'}</td>
-                <td className="p-4"><span className={`text-[10px] px-2 py-0.5 rounded ${statusColors[item.status] || statusColors.draft}`}>{item.status}</span></td>
-                <td className="p-4">
-                  <div className="flex gap-2">
-                    <button onClick={() => openEdit(item)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
-                    <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {items.length === 0 && <tr><td colSpan={5} className="p-8 text-center text-zinc-500">No invoices yet</td></tr>}
-          </tbody>
+          {loading ? (
+            <tbody>
+              {Array.from({ length: 5 }).map((_, i) => <SkeletonRow key={i} cols={5} />)}
+            </tbody>
+          ) : (
+            <tbody>
+              {items.map(item => (
+                <tr key={item.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/30">
+                  <td className="p-4">{item.client_name}</td>
+                  <td className="p-4 text-zinc-400 hidden md:table-cell">{item.project_name || '-'}</td>
+                  <td className="p-4">{item.amount ? `₹${Number(item.amount).toLocaleString()}` : '-'}</td>
+                  <td className="p-4"><span className={`text-[10px] px-2 py-0.5 rounded ${statusColors[item.status] || statusColors.draft}`}>{item.status}</span></td>
+                  <td className="p-4">
+                    <div className="flex gap-2">
+                      <button onClick={() => openEdit(item)} className="text-zinc-400 hover:text-primary"><span className="material-symbols-outlined text-lg">edit</span></button>
+                      <button onClick={() => remove(item.id)} className="text-zinc-400 hover:text-red-400"><span className="material-symbols-outlined text-lg">delete</span></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {items.length === 0 && <tr><td colSpan={5} className="p-8 text-center text-zinc-500">No invoices yet</td></tr>}
+            </tbody>
+          )}
         </table>
       </div>
     </div>
