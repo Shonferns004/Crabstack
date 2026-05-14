@@ -23,6 +23,8 @@ export default function Login() {
       }
     } catch (err) {
       setError(err.message || 'Connection error')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -42,7 +44,7 @@ export default function Login() {
           <label className="text-zinc-400 text-sm block mb-1">Password</label>
           <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary" />
         </div>
-        <button type="submit" className="w-full bg-primary hover:bg-primary/80 text-white font-bold py-2.5 rounded-lg transition-colors">Login</button>
+        <button type="submit" disabled={loading} className="w-full bg-primary hover:bg-primary/80 disabled:opacity-50 text-white font-bold py-2.5 rounded-lg transition-colors">{loading ? 'Logging in...' : 'Login'}</button>
       </form>
     </div>
   )

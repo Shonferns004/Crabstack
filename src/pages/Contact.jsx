@@ -8,10 +8,12 @@ export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', type: '', budget: '', message: '' })
   const [sent, setSent] = useState(false)
   const [error, setError] = useState('')
+  const [sending, setSending] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    setSending(true)
     const fullMessage = [
       form.message,
       form.type && `Project Type: ${form.type}`,
@@ -28,6 +30,8 @@ export default function Contact() {
       setSent(true)
     } catch (err) {
       setError(err.message)
+    } finally {
+      setSending(false)
     }
   }
 
