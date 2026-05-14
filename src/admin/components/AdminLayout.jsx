@@ -37,6 +37,7 @@ export default function AdminLayout({ children }) {
 
   const handleLogout = async () => {
     await api.logout().catch(() => {})
+    localStorage.removeItem('crabstack_token')
     localStorage.removeItem('crabstack_user')
     navigate('/admin/login')
   }

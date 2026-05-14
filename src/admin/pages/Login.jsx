@@ -15,7 +15,8 @@ export default function Login() {
     setLoading(true)
     try {
       const res = await api.login(username, password)
-      if (res.user) {
+      if (res.token) {
+        localStorage.setItem('crabstack_token', res.token)
         localStorage.setItem('crabstack_user', JSON.stringify(res.user))
         navigate('/admin/dashboard')
       } else {

@@ -1,9 +1,17 @@
 const API_URL = import.meta.env.VITE_API_URL || '/api'
 
+function getToken() {
+  return localStorage.getItem('crabstack_token')
+}
+
 async function request(path, options = {}) {
+  const token = getToken()
   const headers = { 'Content-Type': 'application/json', ...options.headers }
-  const res = await fetch(`${API_URL}${path}`, { ...options, headers, credentials: 'include' })
+  if (token) headers.Authorization = `Bearer ${token}`
+
+  const res = await fetch(`${API_URL}${path}`, { ...options, headers })
   if (res.status === 401) {
+    localStorage.removeItem('crabstack_token')
     localStorage.removeItem('crabstack_user')
     window.location.href = '/admin/login'
     throw new Error('Unauthorized')
@@ -17,7 +25,6 @@ export const api = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
-      credentials: 'include',
     })
     const data = await res.json()
     if (res.status === 401) {
@@ -36,15 +43,17 @@ export const api = {
   delete: (path) => request(path, { method: 'DELETE' }),
 
   upload: async (file, alt = '') => {
+    const token = getToken()
     const form = new FormData()
     form.append('file', file)
     form.append('alt', alt)
     const res = await fetch(`${API_URL}/upload`, {
       method: 'POST',
-      credentials: 'include',
+      headers: { Authorization: `Bearer ${token}` },
       body: form,
     })
     if (res.status === 401) {
+      localStorage.removeItem('crabstack_token')
       localStorage.removeItem('crabstack_user')
       window.location.href = '/admin/login'
     }
