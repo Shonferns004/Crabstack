@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import ScrollReveal from '../components/ScrollReveal'
 import GlitchText from '../components/GlitchText'
+import { API_URL } from '../apiUrl'
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', type: '', budget: '', message: '' })
@@ -17,7 +18,7 @@ export default function Contact() {
       form.budget && `Budget: ${form.budget}`,
     ].filter(Boolean).join('\n\n---\n')
     try {
-      const res = await fetch('/api/contacts', {
+      const res = await fetch(`${API_URL}/contacts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: form.name, email: form.email, message: fullMessage }),

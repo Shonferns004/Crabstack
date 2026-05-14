@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { API_URL } from '../apiUrl'
 
 export default function Footer() {
   const [email, setEmail] = useState('')
@@ -6,7 +7,7 @@ export default function Footer() {
   const [settings, setSettings] = useState(null)
 
   useEffect(() => {
-    fetch('/api/settings')
+    fetch(`${API_URL}/settings`)
       .then(res => res.json())
       .then(data => {
         if (data && typeof data === 'object' && !Array.isArray(data)) {
@@ -24,7 +25,7 @@ export default function Footer() {
     if (!email) return
     setStatus('sending')
     try {
-      const res = await fetch('/api/subscribers', {
+      const res = await fetch(`${API_URL}/subscribers`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),

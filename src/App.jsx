@@ -9,6 +9,7 @@ import Services from './pages/Services'
 import Work from './pages/Work'
 import Contact from './pages/Contact'
 import AdminRoutes from './admin/AdminRoutes'
+import { API_URL } from './apiUrl'
 
 const pageVariants = {
   out: { opacity: 0, y: 10 },
@@ -27,7 +28,7 @@ export default function App() {
   }, [location.pathname])
 
   useEffect(() => {
-    fetch('/api/settings')
+    fetch(`${API_URL}/settings`)
       .then(res => res.json())
       .then(data => {
         if (data?.site_title) document.title = data.site_title

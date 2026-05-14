@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import GlitchText from '../components/GlitchText'
+import { API_URL } from '../apiUrl'
 
 const filters = [
   { key: 'all', label: 'All' },
@@ -13,7 +14,7 @@ export default function Work() {
   const [activeFilter, setActiveFilter] = useState('all')
 
   useEffect(() => {
-    fetch('/api/projects')
+    fetch(`${API_URL}/projects`)
       .then(res => res.json())
       .then(data => setProjects(Array.isArray(data) ? data : []))
       .catch(() => setProjects([]))

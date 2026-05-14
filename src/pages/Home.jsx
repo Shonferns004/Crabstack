@@ -11,6 +11,7 @@ import Parallax from '../components/Parallax'
 import Marquee from '../components/Marquee'
 import GlitchText from '../components/GlitchText'
 import ZoomReveal from '../components/ZoomReveal'
+import { API_URL } from '../apiUrl'
 
 const techItems = [
   'Web Development', 'SaaS Solutions', 'Technical Systems Setup', 'Audio & Speaker Installation',
@@ -133,11 +134,11 @@ export default function Home() {
   const { scrollY } = useScroll()
 
   useEffect(() => {
-    fetch('/api/projects')
+    fetch(`${API_URL}/projects`)
       .then(res => res.json())
       .then(data => setProjects(Array.isArray(data) ? data : []))
       .catch(() => setProjects([]))
-    fetch('/api/testimonials')
+    fetch(`${API_URL}/testimonials`)
       .then(res => res.json())
       .then(data => setTestimonials(Array.isArray(data) ? data : []))
       .catch(() => setTestimonials([]))
