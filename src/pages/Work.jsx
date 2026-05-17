@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import GlitchText from '../components/GlitchText'
 import { API_URL } from '../apiUrl'
 import SEO from '../components/SEO'
@@ -13,6 +14,25 @@ const filters = [
 export default function Work() {
   const [projects, setProjects] = useState([])
   const [activeFilter, setActiveFilter] = useState('all')
+  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://crabstack.vercel.app'
+  const workJsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'Crabstack Work Portfolio',
+      url: `${siteUrl}/work`,
+      description: "Crabstack's portfolio of websites and digital projects.",
+      inLanguage: 'en',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+        { '@type': 'ListItem', position: 2, name: 'Work', item: `${siteUrl}/work` },
+      ],
+    },
+  ]
 
   useEffect(() => {
     fetch(`${API_URL}/projects`)
@@ -31,10 +51,11 @@ export default function Work() {
   return (
     <>
       <SEO
-        title="Portfolio and Case Studies"
+        title="See Our Work In Action"
         description="See Crabstack's portfolio of websites and digital projects across development, design, and production."
         path="/work"
         keywords="web design portfolio, development case studies, agency work"
+        jsonLd={workJsonLd}
       />
       <div className="grain"></div>
 
@@ -57,9 +78,12 @@ export default function Work() {
             SEE OUR WORK <br />
             <GlitchText text="IN ACTION" />
           </h1>
+          <p className="mt-6 text-white/60 text-xs sm:text-sm tracking-[0.15em] uppercase">
+            See our work in action through real projects and deployed systems.
+          </p>
 
           <div className="mt-12">
-            <button className="group relative px-10 py-4 bg-neutral-900 border border-primary text-primary font-mono text-sm font-bold uppercase tracking-[0.2em] transition-all hover:bg-primary hover:text-white hover:shadow-[0_0_25px_rgba(230,10,21,0.6)] overflow-hidden cursor-pointer">
+            <button type="button" className="group relative px-10 py-4 bg-neutral-900 border border-primary text-primary font-mono text-sm font-bold uppercase tracking-[0.2em] transition-all hover:bg-primary hover:text-white hover:shadow-[0_0_25px_rgba(230,10,21,0.6)] overflow-hidden cursor-pointer">
               <span className="relative z-10">Explore More</span>
               <div className="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
             </button>
@@ -106,6 +130,7 @@ export default function Work() {
           <div className="flex gap-2 flex-wrap">
             {filters.map((f) => (
               <button
+                type="button"
                 key={f.key}
                 onClick={() => setActiveFilter(f.key)}
                 className={`px-3 md:px-4 py-2 text-[10px] font-bold uppercase transition cursor-pointer ${
@@ -126,7 +151,7 @@ export default function Work() {
               No projects in this category yet
             </div>
           )}
-          {filtered.map((project, i) => (
+          {filtered.map((project) => (
             <div
               key={project.id || project.title}
               className="relative bg-[#111] h-[320px] md:h-[400px] overflow-hidden flex flex-col justify-end p-6 md:p-8 group transition-all duration-300 cursor-pointer"
@@ -140,9 +165,20 @@ export default function Work() {
                 <span className="text-primary text-[10px] font-black uppercase">{project.tags?.[0] || project.client_name || 'Project'}</span>
                 <h3 className="text-xl md:text-2xl uppercase font-bold">{project.title}</h3>
               </div>
-              <a href="#" className="absolute right-6 md:right-8 bottom-6 md:bottom-8 text-[10px] uppercase font-bold z-10 hover:text-primary transition-colors">
-                View Project &rarr;
-              </a>
+              {project.project_url || project.live_url || project.url ? (
+                <a
+                  href={project.project_url || project.live_url || project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute right-6 md:right-8 bottom-6 md:bottom-8 text-[10px] uppercase font-bold z-10 hover:text-primary transition-colors"
+                >
+                  View Project &rarr;
+                </a>
+              ) : (
+                <Link to="/contact" className="absolute right-6 md:right-8 bottom-6 md:bottom-8 text-[10px] uppercase font-bold z-10 hover:text-primary transition-colors">
+                  Request Similar Project &rarr;
+                </Link>
+              )}
             </div>
           ))}
         </div>

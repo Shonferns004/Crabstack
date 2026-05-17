@@ -9,6 +9,7 @@ import Services from './pages/Services'
 import Work from './pages/Work'
 import Contact from './pages/Contact'
 import AdminRoutes from './admin/AdminRoutes'
+import SEO from './components/SEO'
 
 const pageVariants = {
   out: { opacity: 0, y: 10 },
@@ -27,32 +28,42 @@ export default function App() {
   }, [location.pathname])
 
   if (isAdmin) {
-    return <AdminRoutes />
+    return (
+      <>
+        <SEO title="Admin" description="Crabstack admin portal." path={location.pathname} noIndex />
+        <AdminRoutes />
+      </>
+    )
   }
 
   return (
     <div className="bg-black min-h-screen">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[120] focus:bg-black focus:text-white focus:px-3 focus:py-2 focus:rounded">
+        Skip to main content
+      </a>
       <motion.div style={{ opacity: isHome ? navOpacity : 1 }}>
         <Navbar />
       </motion.div>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={location.pathname}
-          variants={pageVariants}
-          initial="out"
-          animate="in"
-          exit="out"
-          transition={{ duration: 0.35, ease: 'easeInOut' }}
-        >
-          <Routes location={location}>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/work" element={<Work />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </motion.div>
-      </AnimatePresence>
+      <main id="main-content">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            variants={pageVariants}
+            initial="out"
+            animate="in"
+            exit="out"
+            transition={{ duration: 0.35, ease: 'easeInOut' }}
+          >
+            <Routes location={location}>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/work" element={<Work />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </motion.div>
+        </AnimatePresence>
+      </main>
       <Footer />
     </div>
   )

@@ -21,6 +21,7 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className="fixed top-4 md:top-8 left-1/2 -translate-x-1/2 z-[100] w-auto"
+        aria-label="Primary"
       >
         {/* Desktop pill nav */}
         <div className="hidden md:flex pill-nav rounded-full px-8 py-3 items-center gap-10 backdrop-blur-md bg-black/40 border border-white/10">
@@ -42,6 +43,7 @@ export default function Navbar() {
         {/* Mobile hamburger */}
         <div className="md:hidden flex items-center">
           <button
+            type="button"
             onClick={() => setOpen(!open)}
             className="pill-nav rounded-full px-4 py-2.5 backdrop-blur-md bg-black/40 border border-white/10 text-white/80 hover:text-primary transition-colors cursor-pointer"
             aria-label="Toggle menu"

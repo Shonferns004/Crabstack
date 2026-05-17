@@ -24,13 +24,34 @@ const team = [
 ]
 
 export default function About() {
+  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://crabstack.vercel.app'
+  const aboutJsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'About Crabstack',
+      url: `${siteUrl}/about`,
+      description: 'Learn about Crabstack, our values, and our digital product delivery model.',
+      inLanguage: 'en',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+        { '@type': 'ListItem', position: 2, name: 'About', item: `${siteUrl}/about` },
+      ],
+    },
+  ]
+
   return (
     <>
       <SEO
-        title="About Crabstack Digital Agency"
+        title="We Are Crabstack"
         description="Learn about Crabstack's team, values, and process for building conversion-focused websites and scalable digital systems."
         path="/about"
         keywords="about crabstack, digital agency team, web design process"
+        jsonLd={aboutJsonLd}
       />
       <div className="grain"></div>
 
@@ -71,6 +92,9 @@ export default function About() {
             transition={{ delay: 0.4 }}
             className="mt-12"
           >
+            <p className="text-white/60 text-xs sm:text-sm tracking-[0.15em] uppercase mb-6">
+              We are Crabstack, the architects behind digital systems that scale.
+            </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               className="group relative px-10 py-4 bg-neutral-900 border border-primary text-primary font-mono text-sm font-bold uppercase tracking-[0.2em] transition-all hover:bg-primary hover:text-white hover:shadow-[0_0_25px_rgba(230,10,21,0.6)] overflow-hidden cursor-pointer"

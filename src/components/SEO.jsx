@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 
 const DEFAULT_DESCRIPTION = 'Crabstack is a performance-focused digital agency building premium digital products, platforms, and brand experiences.'
 const DEFAULT_OG_IMAGE = '/crab2.0.png'
+const DEFAULT_SITE_NAME = 'Crabstack'
+const DEFAULT_SITE_URL = 'https://crabstack.vercel.app'
 
 function ensureMeta(attr, value) {
   const selector = `meta[${attr}]`
@@ -24,6 +26,17 @@ function ensureLink(rel) {
   return el
 }
 
+function ensureAlternateLink(hreflang) {
+  let el = document.head.querySelector(`link[rel="alternate"][hreflang="${hreflang}"]`)
+  if (!el) {
+    el = document.createElement('link')
+    el.setAttribute('rel', 'alternate')
+    el.setAttribute('hreflang', hreflang)
+    document.head.appendChild(el)
+  }
+  return el
+}
+
 function absoluteUrl(baseUrl, value) {
   if (!value) return baseUrl
   if (/^https?:\/\//i.test(value)) return value
@@ -39,19 +52,21 @@ export default function SEO({
   imageAlt = 'Crabstack',
   type = 'website',
   jsonLd = null,
+  noIndex = false,
 }) {
   useEffect(() => {
-    const siteName = 'Crabstack'
-    const baseUrl = (import.meta.env.VITE_SITE_URL || window.location.origin || '').replace(/\/$/, '')
+    const siteName = DEFAULT_SITE_NAME
+    const baseUrl = (import.meta.env.VITE_SITE_URL || window.location.origin || DEFAULT_SITE_URL).replace(/\/$/, '')
     const canonicalUrl = absoluteUrl(baseUrl, path)
     const imageUrl = absoluteUrl(baseUrl, image)
     const fullTitle = title ? `${title} | ${siteName}` : siteName
+    const robotsContent = noIndex ? 'noindex,nofollow,max-image-preview:large' : 'index,follow,max-image-preview:large'
 
     document.title = fullTitle
 
     ensureMeta('name', 'description').setAttribute('content', description)
     ensureMeta('name', 'keywords').setAttribute('content', keywords)
-    ensureMeta('name', 'robots').setAttribute('content', 'index,follow,max-image-preview:large')
+    ensureMeta('name', 'robots').setAttribute('content', robotsContent)
     ensureMeta('name', 'author').setAttribute('content', siteName)
     ensureMeta('name', 'application-name').setAttribute('content', siteName)
     ensureMeta('name', 'apple-mobile-web-app-title').setAttribute('content', siteName)
@@ -76,24 +91,55 @@ export default function SEO({
     ensureMeta('name', 'twitter:card').setAttribute('content', 'summary_large_image')
     ensureMeta('name', 'twitter:title').setAttribute('content', fullTitle)
     ensureMeta('name', 'twitter:description').setAttribute('content', description)
+    ensureMeta('name', 'twitter:url').setAttribute('content', canonicalUrl)
     ensureMeta('name', 'twitter:image').setAttribute('content', imageUrl)
     ensureMeta('name', 'twitter:image:alt').setAttribute('content', imageAlt)
 
     ensureLink('canonical').setAttribute('href', canonicalUrl)
-    ensureLink('alternate').setAttribute('href', canonicalUrl)
-    ensureLink('alternate').setAttribute('hreflang', 'en')
+    ensureAlternateLink('en').setAttribute('href', canonicalUrl)
+    ensureAlternateLink('x-default').setAttribute('href', canonicalUrl)
 
     const scriptId = 'seo-json-ld'
     const existing = document.getElementById(scriptId)
     if (existing) existing.remove()
+    const organizationJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: siteName,
+      url: baseUrl,
+      logo: absoluteUrl(baseUrl, DEFAULT_OG_IMAGE),
+    }
+
+    const graph = []
     if (jsonLd) {
+      if (Array.isArray(jsonLd)) {
+        graph.push(...jsonLd)
+      } else {
+        graph.push(jsonLd)
+      }
+    }
+
+    const hasOrg = graph.some((item) => item && item['@type'] === 'Organization')
+    if (!hasOrg) graph.unshift(organizationJsonLd)
+
+    if (path === '/' && !graph.some((item) => item && item['@type'] === 'WebSite')) {
+      graph.push({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: siteName,
+        url: canonicalUrl,
+        inLanguage: 'en',
+      })
+    }
+
+    if (graph.length > 0) {
       const script = document.createElement('script')
       script.id = scriptId
       script.type = 'application/ld+json'
-      script.text = JSON.stringify(jsonLd)
+      script.text = JSON.stringify(graph.length === 1 ? graph[0] : graph)
       document.head.appendChild(script)
     }
-  }, [title, description, path, keywords, image, imageAlt, type, jsonLd])
+  }, [title, description, path, keywords, image, imageAlt, type, jsonLd, noIndex])
 
   return null
 }

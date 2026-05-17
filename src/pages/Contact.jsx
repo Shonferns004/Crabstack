@@ -10,6 +10,25 @@ export default function Contact() {
   const [sent, setSent] = useState(false)
   const [error, setError] = useState('')
   const [sending, setSending] = useState(false)
+  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://crabstack.vercel.app'
+  const contactJsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ContactPage',
+      name: 'Contact Crabstack',
+      url: `${siteUrl}/contact`,
+      description: 'Contact Crabstack for web development, design, and digital growth projects.',
+      inLanguage: 'en',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+        { '@type': 'ListItem', position: 2, name: 'Contact', item: `${siteUrl}/contact` },
+      ],
+    },
+  ]
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -39,10 +58,11 @@ export default function Contact() {
   return (
     <>
       <SEO
-        title="Contact Crabstack"
+        title="Let's Build Together"
         description="Contact Crabstack to discuss your website, digital product, or production project. Share your brief and get a response from our team."
         path="/contact"
         keywords="contact digital agency, project inquiry, web design contact"
+        jsonLd={contactJsonLd}
       />
       <div className="grain"></div>
 
@@ -74,6 +94,9 @@ export default function Contact() {
             LET'S BUILD<br />
             <GlitchText text="TOGETHER" />
           </motion.h1>
+          <p className="mt-6 text-white/60 text-xs sm:text-sm tracking-[0.15em] uppercase">
+            Let&apos;s build together on your next digital project.
+          </p>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}

@@ -126,13 +126,34 @@ function ServiceSection({ section }) {
 }
 
 export default function Services() {
+  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://crabstack.vercel.app'
+  const servicesJsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: 'Crabstack Services',
+      url: `${siteUrl}/services`,
+      description: 'Explore services across web development, design, SEO, social media, and media production.',
+      inLanguage: 'en',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+        { '@type': 'ListItem', position: 2, name: 'Services', item: `${siteUrl}/services` },
+      ],
+    },
+  ]
+
   return (
     <>
       <SEO
-        title="Services: Design, Development and Production"
+        title="Discover Our Capabilities"
         description="Explore Crabstack services across web development, UX design, social media management, and media production."
         path="/services"
         keywords="web development services, ui ux design, digital production, social media management"
+        jsonLd={servicesJsonLd}
       />
       <div className="grain"></div>
 
@@ -164,6 +185,9 @@ export default function Services() {
             DISCOVER OUR <br />
             <GlitchText text="CAPABILITIES" />
           </motion.h1>
+          <p className="mt-6 text-white/60 text-xs sm:text-sm tracking-[0.15em] uppercase">
+            Discover our capabilities across design, development, and production.
+          </p>
         </div>
 
         <motion.div
