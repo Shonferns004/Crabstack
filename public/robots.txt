@@ -3,4 +3,5 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/
 
-Sitemap: https://crabstack.vercel.app/sitemap.xml
+Sitemap: https://crabstack2.vercel.app/sitemap.xml
+Sitemap: https://crabstack2.vercel.app/sitemap-index.xml

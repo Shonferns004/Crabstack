@@ -173,7 +173,7 @@ export default function Work() {
             >
               <img
                 src={optimizeImageUrl(project.image_url, 1200)}
-                alt={project.title}
+                alt={project.title || 'Client project preview'}
                 className="absolute inset-0 w-full h-full object-cover opacity-40 transition duration-500 group-hover:opacity-60 group-hover:scale-105"
                 loading="lazy"
                 decoding="async"

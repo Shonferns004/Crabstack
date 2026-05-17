@@ -1,5 +1,13 @@
 {
+  "redirects": [
+    { "source": "/sitemap.xml/", "destination": "/sitemap.xml", "permanent": true },
+    { "source": "/sitemap-index.xml/", "destination": "/sitemap-index.xml", "permanent": true },
+    { "source": "/robots.txt/", "destination": "/robots.txt", "permanent": true }
+  ],
   "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/sitemap-index.xml", "destination": "/sitemap-index.xml" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

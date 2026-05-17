@@ -81,7 +81,7 @@ export default function Projects() {
               <label className="text-zinc-400 text-sm block mb-1">Image</label>
               {form.image_url && (
                 <div className="relative mb-2">
-                  <img src={form.image_url} alt="preview" className="w-full h-32 object-cover rounded-lg" />
+                  <img src={form.image_url} alt={form.title ? `${form.title} preview image` : 'Project preview image'} className="w-full h-32 object-cover rounded-lg" />
                   <button onClick={() => setForm({...form, image_url: ''})} className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full text-sm">
                     <span className="material-symbols-outlined text-base">close</span>
                   </button>
@@ -126,7 +126,7 @@ export default function Projects() {
                 <tr key={item.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/30">
                   <td className="p-4">
                     {item.image_url ? (
-                      <img src={item.image_url} alt="" className="w-10 h-10 rounded object-cover bg-zinc-800" />
+                      <img src={item.image_url} alt={item.title ? `${item.title} thumbnail` : 'Project thumbnail'} className="w-10 h-10 rounded object-cover bg-zinc-800" />
                     ) : (
                       <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-zinc-600">
                         <span className="material-symbols-outlined text-lg">image</span>

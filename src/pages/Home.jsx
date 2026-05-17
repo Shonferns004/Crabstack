@@ -579,7 +579,7 @@ function Carousel({ items }) {
               <div className="aspect-square overflow-hidden bg-white/5 relative rounded-xl">
                 <motion.img
                   src={optimizeImageUrl(project.image_url, 900)}
-                  alt={project.title}
+                  alt={project.title || 'Client project showcase'}
                   className="w-full h-full object-cover"
                   loading="lazy"
                   decoding="async"

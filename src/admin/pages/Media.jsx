@@ -67,7 +67,7 @@ export default function Media() {
           {items.map(item => (
             <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden group">
               <div className="aspect-square bg-zinc-800 relative overflow-hidden">
-                <img src={item.url} alt={item.alt || ''} className="w-full h-full object-cover" />
+                <img src={item.url} alt={item.alt || item.filename || 'Media image'} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <button onClick={() => copyUrl(item.url)} className="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full"><span className="material-symbols-outlined text-lg">link</span></button>
                   <button onClick={() => remove(item.id)} className="bg-red-500/70 hover:bg-red-500 text-white p-2 rounded-full"><span className="material-symbols-outlined text-lg">delete</span></button>

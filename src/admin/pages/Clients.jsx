@@ -73,7 +73,7 @@ export default function Clients() {
         <div className="space-y-3">
           {items.map(item => (
             <div key={item.id} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex items-center gap-4">
-              {item.logo_url && <img src={item.logo_url} alt="" className="size-12 rounded-lg object-cover bg-zinc-800 shrink-0" />}
+              {item.logo_url && <img src={item.logo_url} alt={`${item.name || 'Client'} logo`} className="size-12 rounded-lg object-cover bg-zinc-800 shrink-0" />}
               <div className="flex-1 min-w-0">
                 <h3 className="font-bold">{item.name}</h3>
                 <p className="text-zinc-500 text-sm line-clamp-1">{item.description}</p>
