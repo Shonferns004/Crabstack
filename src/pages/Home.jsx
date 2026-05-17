@@ -86,7 +86,7 @@ function PhaseStep({ phase, index, sectionProgress }) {
           <motion.div style={{ opacity: textOpacity }} className="md:pl-12 md:text-left text-center px-2">
             <div className="md:hidden mb-2 text-center">
               <span className="font-mono text-primary text-xs font-bold uppercase block">Phase {phase.num}</span>
-              <h4 className="text-xl font-bold uppercase">{phase.title}</h4>
+              <div className="text-xl font-bold uppercase">{phase.title}</div>
             </div>
             <p className="text-white/60 text-sm leading-relaxed max-w-sm mx-auto md:mx-0">{phase.desc}</p>
           </motion.div>
@@ -96,7 +96,7 @@ function PhaseStep({ phase, index, sectionProgress }) {
           <motion.div style={{ opacity: textOpacity }} className="md:text-right text-center md:pr-12 order-2 md:order-1 px-2">
             <div className="md:hidden mb-2 text-center">
               <span className="font-mono text-primary text-xs font-bold uppercase block">Phase {phase.num}</span>
-              <h4 className="text-xl font-bold uppercase">{phase.title}</h4>
+              <div className="text-xl font-bold uppercase">{phase.title}</div>
             </div>
             <p className="text-white/60 text-sm leading-relaxed max-w-sm mx-auto md:ml-auto">{phase.desc}</p>
           </motion.div>
@@ -176,7 +176,7 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="Premium Digital Agency in Mumbai"
+        title="We Build Digital Edges"
         description="Crabstack builds high-performance websites, digital products, and immersive brand experiences for modern businesses."
         path="/"
         keywords="digital agency mumbai, web design mumbai, website development, product design"
@@ -236,6 +236,12 @@ export default function Home() {
               className="mt-8 text-white/40 text-[10px] sm:text-xs tracking-[0.5em] font-light uppercase max-w-lg mx-auto leading-relaxed border-t border-white/5 pt-8"
             >
               Engineering your future with high-end digital architecture
+            </motion.p>
+            <motion.p
+              style={{ opacity: subtitleOpacity }}
+              className="mt-5 text-white/50 text-xs sm:text-sm tracking-[0.15em] font-light uppercase max-w-xl mx-auto"
+            >
+              We build digital edges for ambitious brands.
             </motion.p>
           </motion.div>
         </motion.div>
