@@ -12,6 +12,7 @@ import Marquee from '../components/Marquee'
 import GlitchText from '../components/GlitchText'
 import ZoomReveal from '../components/ZoomReveal'
 import { API_URL } from '../apiUrl'
+import SEO from '../components/SEO'
 
 const techItems = [
   'Web Development', 'SaaS Solutions', 'Technical Systems Setup', 'Audio & Speaker Installation',
@@ -162,9 +163,25 @@ export default function Home() {
       'linear-gradient(to bottom, rgba(230,10,21,1), rgba(230,10,21,0.3))',
     ]
   )
+  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://crabstack.vercel.app'
+  const homeJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: 'Crabstack',
+    url: siteUrl,
+    areaServed: 'Mumbai, India',
+    serviceType: 'Web design, web development, creative systems, and digital experiences',
+  }
 
   return (
     <>
+      <SEO
+        title="Premium Digital Agency in Mumbai"
+        description="Crabstack builds high-performance websites, digital products, and immersive brand experiences for modern businesses."
+        path="/"
+        keywords="digital agency mumbai, web design mumbai, website development, product design"
+        jsonLd={homeJsonLd}
+      />
       {/* ===== STICKY HERO ===== */}
       <section className="sticky top-0 h-screen w-full overflow-hidden bg-black z-0 flex flex-col items-center justify-center px-4">
         <div className="grain"></div>

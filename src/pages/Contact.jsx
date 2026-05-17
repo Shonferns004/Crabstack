@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import ScrollReveal from '../components/ScrollReveal'
 import GlitchText from '../components/GlitchText'
 import { API_URL } from '../apiUrl'
+import SEO from '../components/SEO'
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', type: '', budget: '', message: '' })
@@ -37,6 +38,12 @@ export default function Contact() {
 
   return (
     <>
+      <SEO
+        title="Contact Crabstack"
+        description="Contact Crabstack to discuss your website, digital product, or production project. Share your brief and get a response from our team."
+        path="/contact"
+        keywords="contact digital agency, project inquiry, web design contact"
+      />
       <div className="grain"></div>
 
       {/* Hero */}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import GlitchText from '../components/GlitchText'
 import { API_URL } from '../apiUrl'
+import SEO from '../components/SEO'
 
 const filters = [
   { key: 'all', label: 'All' },
@@ -29,6 +30,12 @@ export default function Work() {
 
   return (
     <>
+      <SEO
+        title="Portfolio and Case Studies"
+        description="See Crabstack's portfolio of websites and digital projects across development, design, and production."
+        path="/work"
+        keywords="web design portfolio, development case studies, agency work"
+      />
       <div className="grain"></div>
 
       {/* Hero */}

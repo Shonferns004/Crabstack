@@ -8,6 +8,7 @@ import TextReveal from '../components/TextReveal'
 import Parallax from '../components/Parallax'
 import GlitchText from '../components/GlitchText'
 import Marquee from '../components/Marquee'
+import SEO from '../components/SEO'
 
 
 const techMarquee = ['React', 'Node.js', 'TypeScript', 'AWS', 'Docker', 'GraphQL', 'PostgreSQL', 'Python', 'Next.js', 'Solidity']
@@ -127,6 +128,12 @@ function ServiceSection({ section }) {
 export default function Services() {
   return (
     <>
+      <SEO
+        title="Services: Design, Development and Production"
+        description="Explore Crabstack services across web development, UX design, social media management, and media production."
+        path="/services"
+        keywords="web development services, ui ux design, digital production, social media management"
+      />
       <div className="grain"></div>
 
       {/* Hero */}

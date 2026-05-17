@@ -6,6 +6,7 @@ import ScrollRotation from '../components/ScrollRotation'
 import TextReveal from '../components/TextReveal'
 import Parallax from '../components/Parallax'
 import GlitchText from '../components/GlitchText'
+import SEO from '../components/SEO'
 
 
 const values = [
@@ -25,6 +26,12 @@ const team = [
 export default function About() {
   return (
     <>
+      <SEO
+        title="About Crabstack Digital Agency"
+        description="Learn about Crabstack's team, values, and process for building conversion-focused websites and scalable digital systems."
+        path="/about"
+        keywords="about crabstack, digital agency team, web design process"
+      />
       <div className="grain"></div>
 
       {/* Hero */}
