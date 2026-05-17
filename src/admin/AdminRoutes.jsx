@@ -20,6 +20,8 @@ import Media from './pages/Media'
 import Settings from './pages/Settings'
 import ActivityLog from './pages/ActivityLog'
 import Users from './pages/Users'
+import Leads from './pages/Leads'
+import GroqKeys from './pages/GroqKeys'
 
 function AdminPage({ children }) {
   return <AdminLayout>{children}</AdminLayout>
@@ -40,12 +42,14 @@ export default function AdminRoutes() {
       <Route path="/admin/subscribers" element={<PrivateRoute><AdminPage><Subscribers /></AdminPage></PrivateRoute>} />
       <Route path="/admin/bookings" element={<PrivateRoute><AdminPage><Bookings /></AdminPage></PrivateRoute>} />
       <Route path="/admin/clients" element={<PrivateRoute><AdminPage><Clients /></AdminPage></PrivateRoute>} />
+      <Route path="/admin/leads" element={<PrivateRoute><AdminPage><Leads /></AdminPage></PrivateRoute>} />
       <Route path="/admin/invoices" element={<PrivateRoute><AdminPage><Invoices /></AdminPage></PrivateRoute>} />
       <Route path="/admin/pages" element={<PrivateRoute><AdminPage><Pages /></AdminPage></PrivateRoute>} />
       <Route path="/admin/navigation" element={<PrivateRoute><AdminPage><Navigation /></AdminPage></PrivateRoute>} />
       <Route path="/admin/seo" element={<PrivateRoute><AdminPage><SEO /></AdminPage></PrivateRoute>} />
       <Route path="/admin/media" element={<PrivateRoute><AdminPage><Media /></AdminPage></PrivateRoute>} />
       <Route path="/admin/settings" element={<PrivateRoute><AdminPage><Settings /></AdminPage></PrivateRoute>} />
+      <Route path="/admin/groq-keys" element={<PrivateRoute><AdminPage><GroqKeys /></AdminPage></PrivateRoute>} />
       <Route path="/admin/activity" element={<PrivateRoute><AdminPage><ActivityLog /></AdminPage></PrivateRoute>} />
       <Route path="/admin/users" element={<PrivateRoute><AdminPage><Users /></AdminPage></PrivateRoute>} />
     </Routes>

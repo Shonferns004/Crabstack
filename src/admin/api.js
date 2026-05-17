@@ -10,13 +10,17 @@ async function request(path, options = {}) {
   if (token) headers.Authorization = `Bearer ${token}`
 
   const res = await fetch(`${API_URL}${path}`, { ...options, headers })
+  const data = await res.json().catch(() => ({}))
   if (res.status === 401) {
     localStorage.removeItem('crabstack_token')
     localStorage.removeItem('crabstack_user')
     window.location.href = '/admin/login'
     throw new Error('Unauthorized')
   }
-  return res.json()
+  if (!res.ok) {
+    throw new Error(data?.error || `Request failed (${res.status})`)
+  }
+  return data
 }
 
 export const api = {
@@ -57,6 +61,8 @@ export const api = {
       localStorage.removeItem('crabstack_user')
       window.location.href = '/admin/login'
     }
-    return res.json()
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) throw new Error(data?.error || `Upload failed (${res.status})`)
+    return data
   }
 }
