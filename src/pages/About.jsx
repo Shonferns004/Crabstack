@@ -147,6 +147,27 @@ export default function About() {
         </section>
       </ScrollReveal>
 
+      <ScrollReveal>
+        <section className="py-12 md:py-16 border-b border-white/5">
+          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8">
+            <article className="p-6 md:p-8 rounded-xl border border-primary/20 bg-primary/5">
+              <p className="text-primary text-[10px] tracking-[0.3em] uppercase mb-3">Founder Note</p>
+              <h3 className="text-2xl font-bold uppercase mb-3">Ramon Bakuri</h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Ramon leads delivery and growth strategy, focused on translating business goals into performance-driven digital systems.
+              </p>
+            </article>
+            <article className="p-6 md:p-8 rounded-xl border border-white/10 bg-white/[0.02]">
+              <p className="text-primary text-[10px] tracking-[0.3em] uppercase mb-3">Co-Founder Note</p>
+              <h3 className="text-2xl font-bold uppercase mb-3">Benjamin Arokiaraj</h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Benjamin directs creative strategy and experience design, ensuring each product balances visual impact with conversion outcomes.
+              </p>
+            </article>
+          </div>
+        </section>
+      </ScrollReveal>
+
       {/* Core Values - Fey-style 3D */}
       <ScrollReveal>
         <section className="py-24 md:py-32 bg-white/[0.02]">

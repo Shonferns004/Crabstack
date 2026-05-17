@@ -113,3 +113,36 @@
   box-shadow: 0 0 30px rgba(230, 10, 21, 0.15);
   transform: translateY(-4px);
 }
+
+@media (max-width: 1024px) {
+  .text-huge {
+    font-size: clamp(2.2rem, 13vw, 7rem);
+    line-height: 0.95;
+  }
+
+  .service-card {
+    min-height: 300px;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .service-card h3 {
+    font-size: 1.15rem;
+  }
+
+  .service-card p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

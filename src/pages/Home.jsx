@@ -21,6 +21,34 @@ const techItems = [
   'Event Hosting (Emcee)', 'Event Management', 'Event Technical Setup', 'Live Audio Production',
 ]
 
+const fallbackTestimonials = [
+  {
+    quote: 'Crabstack rebuilt our public site and launch flow in three weeks. Lead quality and speed both improved immediately.',
+    name: 'Neha Kulkarni',
+    role: 'Marketing Lead, UrbanNest Realty',
+  },
+  {
+    quote: 'The team translated our event production workflow into a clean digital system that cut manual coordination by half.',
+    name: 'Daniel Pereira',
+    role: 'Operations Manager, LiveAxis Events',
+  },
+]
+
+const defaultProjectImage = 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=72'
+
+function optimizeImageUrl(url, width = 1200) {
+  if (!url) return defaultProjectImage
+  if (url.includes('images.unsplash.com')) {
+    const sep = url.includes('?') ? '&' : '?'
+    return `${url}${sep}auto=format&fit=crop&w=${width}&q=72`
+  }
+  if (url.includes('googleusercontent.com')) {
+    const sep = url.includes('?') ? '&' : '?'
+    return `${url}${sep}format=webp`
+  }
+  return url
+}
+
 const phases = [
   {
     num: '01', title: 'Discovery', icon: 'search',
@@ -164,6 +192,7 @@ export default function Home() {
     ]
   )
   const siteUrl = import.meta.env.VITE_SITE_URL || 'https://crabstack.vercel.app'
+  const testimonialItems = testimonials.length > 0 ? testimonials : fallbackTestimonials
   const homeJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
@@ -284,11 +313,23 @@ export default function Home() {
             >
             <div className="aspect-square bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 relative group">
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
-              <img
-                className="w-full h-full object-cover transition-all duration-700 opacity-60"
-                src="/crab2.0.png"
-                alt="Crabstack"
-              />
+              <picture>
+                <source
+                  srcSet="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=72&fm=avif"
+                  type="image/avif"
+                />
+                <source
+                  srcSet="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=72&fm=webp"
+                  type="image/webp"
+                />
+                <img
+                  className="w-full h-full object-cover transition-all duration-700 opacity-60"
+                  src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=72"
+                  alt="Crabstack project strategy and planning visual"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
               <div className="absolute bottom-8 left-8 z-20">
                 <Counter target={10} suffix="+" />
                 <div className="text-sm font-mono tracking-widest text-slate-500 uppercase">
@@ -312,6 +353,10 @@ export default function Home() {
             <p className="text-slate-400 text-lg leading-relaxed">
               Reliability, strength, and innovation at our core. We create high-impact digital products with an asymmetric, brutalist approach. We don't just build websites; we engineer market dominance.
             </p>
+            <Link to="/about" className="inline-flex items-center gap-2 text-primary text-xs uppercase tracking-[0.2em] font-bold hover:text-white transition-colors">
+              Meet The Founders
+              <span className="material-symbols-outlined text-base">arrow_forward</span>
+            </Link>
             <div className="grid grid-cols-2 gap-8">
               <div className="p-6 border-l-2 border-primary bg-primary/5">
                 <div className="text-4xl font-bold text-white counter" data-target="50">0+</div>
@@ -449,7 +494,7 @@ export default function Home() {
               animate={{ x: ['0%', '-50%'] }}
               transition={{ duration: 40, ease: 'linear', repeat: Infinity }}
             >
-              {[...testimonials, ...testimonials].map((t, i) => (
+              {[...testimonialItems, ...testimonialItems].map((t, i) => (
                 <div key={i} className="w-[340px] md:w-[420px] min-h-[240px] flex-shrink-0 flex flex-col justify-between gap-4 border-l-2 border-primary/20 pl-6 bg-zinc-900/20 p-5 md:p-6 rounded">
                   <span className="material-symbols-outlined text-primary text-3xl opacity-40">format_quote</span>
                   <h3 className="text-lg md:text-xl font-black italic uppercase tracking-tighter text-white leading-tight">{t.quote}</h3>
@@ -482,7 +527,7 @@ function Carousel({ items }) {
   useEffect(() => {
     if (itemCount === 0 || isHovered) return
     const interval = setInterval(() => {
-      setActiveIndex(prev => prev + 1)
+      setActiveIndex((prev) => prev + 1)
     }, 3000)
     return () => clearInterval(interval)
   }, [isHovered, itemCount])
@@ -533,9 +578,11 @@ function Carousel({ items }) {
             >
               <div className="aspect-square overflow-hidden bg-white/5 relative rounded-xl">
                 <motion.img
-                  src={project.image_url || '/MHB.png'}
+                  src={optimizeImageUrl(project.image_url, 900)}
                   alt={project.title}
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                   animate={{
                     scale: isActive ? [1, 1.12, 1.08, 1.15] : 1,
                     opacity: isActive ? 1 : 0.4,
@@ -559,6 +606,7 @@ function Carousel({ items }) {
       <div className="flex items-center gap-2 justify-center mt-6">
         {items.map((_, i) => (
           <button
+            type="button"
             key={i}
             onClick={() => setActiveIndex(i + itemCount)}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${i === activeIndex % itemCount ? 'bg-primary w-6' : 'bg-white/20 hover:bg-white/40'}`}

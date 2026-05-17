@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { API_URL } from '../apiUrl'
 
 export default function Footer() {
@@ -109,6 +110,14 @@ export default function Footer() {
               <span className="text-[10px] text-white/20 font-bold tracking-[0.5em]">
                 {s.copyright ? s.copyright.replace('{year}', year).replace('{YEAR}', year) : `©${year} CRABSTACK`}
               </span>
+              <div className="flex items-center gap-4">
+                <Link to="/privacy" className="text-[10px] text-white/35 hover:text-primary transition-colors font-bold tracking-widest">
+                  PRIVACY
+                </Link>
+                <Link to="/terms" className="text-[10px] text-white/35 hover:text-primary transition-colors font-bold tracking-widest">
+                  TERMS
+                </Link>
+              </div>
               <div className="h-[1px] flex-grow bg-white/5 min-w-[40px]"></div>
               <div className="flex gap-6 md:gap-8">
                 {(s.social_twitter || s.social_instagram || s.social_linkedin) ? (

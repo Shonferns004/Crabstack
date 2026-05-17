@@ -8,8 +8,12 @@ import About from './pages/About'
 import Services from './pages/Services'
 import Work from './pages/Work'
 import Contact from './pages/Contact'
+import NotFound from './pages/NotFound'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
 import AdminRoutes from './admin/AdminRoutes'
 import SEO from './components/SEO'
+import Analytics from './components/Analytics'
 
 const pageVariants = {
   out: { opacity: 0, y: 10 },
@@ -38,6 +42,7 @@ export default function App() {
 
   return (
     <div className="bg-black min-h-screen">
+      <Analytics />
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[120] focus:bg-black focus:text-white focus:px-3 focus:py-2 focus:rounded">
         Skip to main content
       </a>
@@ -60,6 +65,9 @@ export default function App() {
               <Route path="/services" element={<Services />} />
               <Route path="/work" element={<Work />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </motion.div>
         </AnimatePresence>

@@ -11,6 +11,21 @@ const filters = [
   { key: 'design', label: 'Design' },
 ]
 
+const defaultProjectImage = 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=72'
+
+function optimizeImageUrl(url, width = 1200) {
+  if (!url) return defaultProjectImage
+  if (url.includes('images.unsplash.com')) {
+    const sep = url.includes('?') ? '&' : '?'
+    return `${url}${sep}auto=format&fit=crop&w=${width}&q=72`
+  }
+  if (url.includes('googleusercontent.com')) {
+    const sep = url.includes('?') ? '&' : '?'
+    return `${url}${sep}format=webp`
+  }
+  return url
+}
+
 export default function Work() {
   const [projects, setProjects] = useState([])
   const [activeFilter, setActiveFilter] = useState('all')
@@ -157,9 +172,11 @@ export default function Work() {
               className="relative bg-[#111] h-[320px] md:h-[400px] overflow-hidden flex flex-col justify-end p-6 md:p-8 group transition-all duration-300 cursor-pointer"
             >
               <img
-                src={project.image_url || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b'}
+                src={optimizeImageUrl(project.image_url, 1200)}
                 alt={project.title}
                 className="absolute inset-0 w-full h-full object-cover opacity-40 transition duration-500 group-hover:opacity-60 group-hover:scale-105"
+                loading="lazy"
+                decoding="async"
               />
               <div className="relative z-10">
                 <span className="text-primary text-[10px] font-black uppercase">{project.tags?.[0] || project.client_name || 'Project'}</span>
