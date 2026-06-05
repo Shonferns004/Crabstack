@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import ScrollReveal from '../components/ScrollReveal'
 import ZoomScroll from '../components/ZoomScroll'
 import ScrollTransform3D from '../components/ScrollTransform3D'
@@ -300,12 +301,14 @@ export default function About() {
         <section className="py-24 md:py-32 bg-primary">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-10">Let's Build Something Powerful.</h2>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              className="bg-black text-white px-10 md:px-12 py-5 rounded-lg text-lg font-bold hover:bg-black/80 transition-all shadow-2xl cursor-pointer"
-            >
-              Start Your Project
-            </motion.button>
+            <Link to="/contact">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                className="bg-black text-white px-10 md:px-12 py-5 rounded-lg text-lg font-bold hover:bg-black/80 transition-all shadow-2xl cursor-pointer"
+              >
+                Start Your Project
+              </motion.button>
+            </Link>
           </div>
         </section>
         </Parallax>

@@ -42,7 +42,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="pt-24 md:pt-32 pb-0 px-6 border-t border-white/5 bg-[#030303]">
+    <footer className="py-24 md:py-32 px-6 border-t border-white/5 bg-[#030303]">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           <div>
@@ -104,27 +104,28 @@ export default function Footer() {
                 <p className="text-red-400 text-[10px] tracking-widest uppercase mt-2">Failed — try again</p>
               )}
             </div>
-          </div>
-        </div>
 
-        <div className="mt-16 pt-6 border-t border-white/5 flex items-center justify-between flex-wrap gap-4">
-          <span className="text-[10px] text-white/50 font-bold tracking-[0.5em]">
-            {s.copyright ? s.copyright.replace('{year}', year).replace('{YEAR}', year) : '\u00A92026 CRABSTACK'}
-          </span>
-          <div className="flex gap-6">
-            {(s.social_twitter || s.social_instagram || s.social_linkedin) ? (
-              <>
-                {s.social_twitter && <a href={s.social_twitter} target="_blank" rel="noopener noreferrer" className="text-[10px] text-white/60 hover:text-primary transition-colors font-bold tracking-widest min-w-[28px] min-h-[28px] flex items-center justify-center">TW</a>}
-                {s.social_instagram && <a href={s.social_instagram} target="_blank" rel="noopener noreferrer" className="text-[10px] text-white/60 hover:text-primary transition-colors font-bold tracking-widest min-w-[28px] min-h-[28px] flex items-center justify-center">IG</a>}
-                {s.social_linkedin && <a href={s.social_linkedin} target="_blank" rel="noopener noreferrer" className="text-[10px] text-white/60 hover:text-primary transition-colors font-bold tracking-widest min-w-[28px] min-h-[28px] flex items-center justify-center">LI</a>}
-              </>
-            ) : (
-              <>
-                <span className="text-[10px] text-white/50 font-bold tracking-widest">TW</span>
-                <span className="text-[10px] text-white/50 font-bold tracking-widest">IG</span>
-                <span className="text-[10px] text-white/50 font-bold tracking-widest">LI</span>
-              </>
-            )}
+            <div className="flex items-center gap-6 md:gap-12 mt-16 md:mt-24 flex-wrap">
+              <span className="text-[10px] text-white/50 font-bold tracking-[0.5em]">
+                {s.copyright ? s.copyright.replace('{year}', year).replace('{YEAR}', year) : '©' + year + ' CRABSTACK'}
+              </span>
+              <div className="h-[1px] flex-grow bg-white/5 min-w-[40px]"></div>
+              <div className="flex gap-6 md:gap-8">
+                {(s.social_twitter || s.social_instagram || s.social_linkedin) ? (
+                  <>
+                    {s.social_twitter && <a href={s.social_twitter} target="_blank" rel="noopener noreferrer" className="text-[10px] text-white/60 hover:text-primary transition-colors font-bold tracking-widest min-w-[28px] min-h-[28px] flex items-center justify-center">TW</a>}
+                    {s.social_instagram && <a href={s.social_instagram} target="_blank" rel="noopener noreferrer" className="text-[10px] text-white/60 hover:text-primary transition-colors font-bold tracking-widest min-w-[28px] min-h-[28px] flex items-center justify-center">IG</a>}
+                    {s.social_linkedin && <a href={s.social_linkedin} target="_blank" rel="noopener noreferrer" className="text-[10px] text-white/60 hover:text-primary transition-colors font-bold tracking-widest min-w-[28px] min-h-[28px] flex items-center justify-center">LI</a>}
+                  </>
+                ) : (
+                  <>
+                    <span className="text-[10px] text-white/50 font-bold tracking-widest">TW</span>
+                    <span className="text-[10px] text-white/50 font-bold tracking-widest">IG</span>
+                    <span className="text-[10px] text-white/50 font-bold tracking-widest">LI</span>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
