@@ -120,6 +120,11 @@
   80% { clip-path: polygon(0 90%, 100% 90%, 100% 95%, 0 95%); transform: translateX(-4px); opacity: 0.3; }
 }
 
+@keyframes marqueeScroll {
+  from { transform: translateX(0%); }
+  to { transform: translateX(-50%); }
+}
+
 .glass-card {
   background: rgba(230, 10, 21, 0.03);
   backdrop-filter: blur(12px);
