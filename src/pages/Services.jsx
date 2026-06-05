@@ -29,30 +29,24 @@ const services = [
     bg: true,
   },
   {
-    num: '03', title: 'Marketing & Growth', subtitle: 'Strategic Expansion.',
+    num: '03', title: 'Marketing & Media', subtitle: 'Strategic Expansion.',
     items: [
       { icon: 'trending_up', title: 'SEO Optimization', desc: 'Data-driven strategies to dominate search rankings and drive organic growth.' },
       { icon: 'share', title: 'Social Media Management', desc: 'Strategic content distribution and community engagement across all platforms.' },
-      { icon: 'analytics', title: 'Analytics & Reporting', desc: 'Comprehensive performance tracking with actionable insights and ROI measurement.' },
+      { icon: 'camera_enhance', title: 'Photo Production', desc: 'Professional photography, retouching, and visual asset creation at scale.' },
+      { icon: 'movie_filter', title: 'Video Production', desc: 'Cinematic storytelling, filming, and post-production that elevates your brand narrative.' },
+      { icon: 'audio_file', title: 'Audio Production', desc: 'Podcast recording, sound design, mixing, and audio branding for any medium.' },
     ],
     bg: false,
   },
   {
-    num: '04', title: 'Media & Production', subtitle: 'Content as Art.',
-    items: [
-      { icon: 'movie_filter', title: 'Video Editing', desc: 'Cinematic storytelling and post-production that elevates your brand narrative.' },
-      { icon: 'camera_enhance', title: 'Photo Manipulation', desc: 'Professional retouching, compositing, and visual asset creation at scale.' },
-    ],
-    bg: true,
-  },
-  {
-    num: '05', title: 'Event Management', subtitle: 'Experiences That Matter.',
+    num: '04', title: 'Event Management', subtitle: 'Experiences That Matter.',
     items: [
       { icon: 'event', title: 'Event Planning & Coordination', desc: 'End-to-end event management from concept to execution, ensuring seamless experiences.' },
       { icon: 'celebration', title: 'Live Event Production', desc: 'Technical production, staging, and on-site management for events of any scale.' },
       { icon: 'groups', title: 'Community & Meetups', desc: 'Strategic community building through curated networking events and brand activations.' },
     ],
-    bg: false,
+    bg: true,
   },
 ]
 

@@ -18,23 +18,23 @@ const values = [
 const team = [
   {
     num: "01",
-    tag: "CORE",
+    tag: "DIRECTION",
     name: "RAMON\nBAKURI",
     role: "Founder & Managing Director",
     trait: "Radicalism",
   },
   {
     num: "02",
-    tag: "EXPERIENCE",
+    tag: "PERECEPTION",
     name: "BENJAMIN\nAROCKIARAJ",
     role: "Co-Founder & Director of Creative Strategy",
     trait: "Brutalist",
   },
   {
     num: "03",
-    tag: "INFRASTRUCTURE",
-    name: "SHON\FERNANDES",
-    role: "Director of Technical Architecture",
+    tag: "EXECUTION",
+    name: "SHON\nFERNANDES",
+    role: "Co-Founder & Tech Lead",
     trait: "Velocity",
   },
 ];
@@ -277,7 +277,7 @@ export default function About() {
                 whileHover={{ scale: 1.02 }}
                 className="p-8 md:p-10 border border-white/10 bg-black flex flex-col min-h-[320px] md:min-h-[350px] hover:bg-white/[0.02] transition-all duration-500 cursor-pointer group"
               >
-                <div className="text-[10px] font-mono text-white/60 mb-8 tracking-widest">06 / CAREERS</div>
+                <div className="text-[10px] font-mono text-white/60 mb-8 tracking-widest">04 / CAREERS</div>
                 <div className="flex-grow flex items-center">
                   <h3 className="text-3xl md:text-4xl font-bold leading-[0.9] mb-4 text-white/50 group-hover:text-white/60 transition-colors uppercase">Your<br />Role</h3>
                 </div>
