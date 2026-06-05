@@ -5,6 +5,7 @@ import Parallax from '../components/Parallax'
 import GlitchText from '../components/GlitchText'
 import Marquee from '../components/Marquee'
 import StoryParallax from '../components/StoryParallax'
+import stackPdf from '../assets/pdf/stack.pdf'
 
 
 const techMarquee = ['React', 'Node.js', 'TypeScript', 'AWS', 'Docker', 'GraphQL', 'PostgreSQL', 'Python', 'Next.js', 'Solidity']
@@ -177,6 +178,12 @@ export default function Services() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 className="border border-black/40 text-white px-10 md:px-12 py-5 rounded-lg font-bold transition-all hover:bg-black/20 cursor-pointer"
+                onClick={() => {
+                  const a = document.createElement('a')
+                  a.href = stackPdf
+                  a.download = 'crabstack-stack.pdf'
+                  a.click()
+                }}
               >
                 Download Stack
               </motion.button>
