@@ -416,7 +416,7 @@ export default function Home() {
           </div>
         </ScrollReveal>
         <Parallax speed={0.2}>
-        <div className="relative w-full" onMouseEnter={() => setHoveredTestimonials(true)} onMouseLeave={() => setHoveredTestimonials(false)}>
+        <div className="relative w-full" onMouseEnter={() => setHoveredTestimonials(true)} onMouseLeave={() => setHoveredTestimonials(false)} onTouchStart={() => setHoveredTestimonials(true)} onTouchEnd={() => setHoveredTestimonials(false)}>
           <div className="overflow-hidden">
             <motion.div
               className="flex gap-6 md:gap-10 w-max px-6"
