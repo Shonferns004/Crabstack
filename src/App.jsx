@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Services from './pages/Services'
 import Work from './pages/Work'
+import ProjectDetail from './pages/ProjectDetail'
 import Contact from './pages/Contact'
 import NotFound from './pages/NotFound'
 import { API_URL } from './apiUrl'
@@ -50,6 +51,7 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/work" element={<Work />} />
+            <Route path="/work/:id" element={<ProjectDetail />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

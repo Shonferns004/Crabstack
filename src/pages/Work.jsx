@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import GlitchText from '../components/GlitchText'
 import StoryParallax from '../components/StoryParallax'
 import { API_URL } from '../apiUrl'
@@ -130,8 +131,9 @@ export default function Work() {
             </div>
           )}
           {filtered.map((project, i) => (
-            <div
+            <Link
               key={project.id || project.title}
+              to={`/work/${project.id}`}
               className="relative bg-[#111] h-[320px] md:h-[400px] overflow-hidden flex flex-col justify-end p-6 md:p-8 group transition-all duration-300 cursor-pointer"
             >
               <img
@@ -143,10 +145,10 @@ export default function Work() {
                 <span className="text-primary text-[10px] font-black uppercase">{project.tags?.[0] || project.client_name || 'Project'}</span>
                 <h3 className="text-xl md:text-2xl uppercase font-bold">{project.title}</h3>
               </div>
-              <a href="#" className="absolute right-6 md:right-8 bottom-6 md:bottom-8 text-[10px] uppercase font-bold z-10 hover:text-primary transition-colors">
+              <span className="absolute right-6 md:right-8 bottom-6 md:bottom-8 text-[10px] uppercase font-bold z-10 group-hover:text-primary transition-colors">
                 View Project &rarr;
-              </a>
-            </div>
+              </span>
+            </Link>
           ))}
         </div>
       </section>
