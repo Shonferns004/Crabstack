@@ -51,7 +51,7 @@ export default function Footer() {
             </h2>
             <div className="grid grid-cols-2 gap-8 md:gap-12">
               <div>
-                <span className="text-white/20 text-[9px] font-bold tracking-[0.4em] uppercase mb-4 block">
+                <span className="text-white/50 text-[9px] font-bold tracking-[0.4em] uppercase mb-4 block">
                   COMMS
                 </span>
                 <p className="text-sm md:text-base font-bold">{s.site_email || 'connect@crabstack.io'}</p>
@@ -62,7 +62,7 @@ export default function Footer() {
                 )}
               </div>
               <div>
-                <span className="text-white/20 text-[9px] font-bold tracking-[0.4em] uppercase mb-4 block">
+                <span className="text-white/50 text-[9px] font-bold tracking-[0.4em] uppercase mb-4 block">
                   LOCATION
                 </span>
                 {s.site_address ? (
@@ -81,7 +81,7 @@ export default function Footer() {
 
           <div className="flex flex-col justify-between">
             <div className="max-w-md">
-              <p className="text-white/40 text-base md:text-lg font-light leading-relaxed mb-12">
+              <p className="text-white/60 text-base md:text-lg font-light leading-relaxed mb-12">
                 {s.footer_text || 'Join the vanguard of digital engineering. Now accepting high-priority digital missions.'}
               </p>
               <form className="relative" onSubmit={handleSubscribe}>
@@ -93,7 +93,7 @@ export default function Footer() {
                   className="w-full bg-transparent border-b border-white/20 py-4 pr-24 focus:outline-none focus:border-primary text-sm tracking-widest uppercase transition-colors"
                   required
                 />
-                <button className="absolute right-0 bottom-4 text-primary font-bold text-[10px] tracking-widest cursor-pointer">
+                <button className="absolute right-0 bottom-2 text-primary font-bold text-[10px] tracking-widest cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center">
                   {status === 'sending' ? 'SENDING...' : status === 'success' ? 'SENT' : 'CONNECT'}
                 </button>
               </form>
@@ -106,22 +106,22 @@ export default function Footer() {
             </div>
 
             <div className="flex items-center gap-6 md:gap-12 mt-16 md:mt-24 flex-wrap">
-              <span className="text-[10px] text-white/20 font-bold tracking-[0.5em]">
+              <span className="text-[10px] text-white/50 font-bold tracking-[0.5em]">
                 {s.copyright ? s.copyright.replace('{year}', year).replace('{YEAR}', year) : `©${year} CRABSTACK`}
               </span>
               <div className="h-[1px] flex-grow bg-white/5 min-w-[40px]"></div>
               <div className="flex gap-6 md:gap-8">
                 {(s.social_twitter || s.social_instagram || s.social_linkedin) ? (
                   <>
-                    {s.social_twitter && <a href={s.social_twitter} target="_blank" rel="noopener noreferrer" className="text-[10px] text-white/40 hover:text-primary transition-colors font-bold tracking-widest">TW</a>}
-                    {s.social_instagram && <a href={s.social_instagram} target="_blank" rel="noopener noreferrer" className="text-[10px] text-white/40 hover:text-primary transition-colors font-bold tracking-widest">IG</a>}
-                    {s.social_linkedin && <a href={s.social_linkedin} target="_blank" rel="noopener noreferrer" className="text-[10px] text-white/40 hover:text-primary transition-colors font-bold tracking-widest">LI</a>}
+                    {s.social_twitter && <a href={s.social_twitter} target="_blank" rel="noopener noreferrer" className="text-[10px] text-white/60 hover:text-primary transition-colors font-bold tracking-widest min-w-[28px] min-h-[28px] flex items-center justify-center">TW</a>}
+                    {s.social_instagram && <a href={s.social_instagram} target="_blank" rel="noopener noreferrer" className="text-[10px] text-white/60 hover:text-primary transition-colors font-bold tracking-widest min-w-[28px] min-h-[28px] flex items-center justify-center">IG</a>}
+                    {s.social_linkedin && <a href={s.social_linkedin} target="_blank" rel="noopener noreferrer" className="text-[10px] text-white/60 hover:text-primary transition-colors font-bold tracking-widest min-w-[28px] min-h-[28px] flex items-center justify-center">LI</a>}
                   </>
                 ) : (
                   <>
-                    <span className="text-[10px] text-white/20 font-bold tracking-widest">TW</span>
-                    <span className="text-[10px] text-white/20 font-bold tracking-widest">IG</span>
-                    <span className="text-[10px] text-white/20 font-bold tracking-widest">LI</span>
+                    <span className="text-[10px] text-white/50 font-bold tracking-widest">TW</span>
+                    <span className="text-[10px] text-white/50 font-bold tracking-widest">IG</span>
+                    <span className="text-[10px] text-white/50 font-bold tracking-widest">LI</span>
                   </>
                 )}
               </div>

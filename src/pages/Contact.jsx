@@ -100,7 +100,7 @@ export default function Contact() {
             <span className="text-[10px] font-bold tracking-widest text-white/60 uppercase">Systems Online [LIVE]</span>
           </div>
           <div className="h-[1px] w-10 md:w-16 bg-white/20 hidden sm:block"></div>
-          <span className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">CORE-v3.0.1</span>
+          <span className="text-[10px] font-mono text-white/50 uppercase tracking-[0.2em]">CORE-v3.0.1</span>
         </motion.div>
       </section>
       </StoryParallax>
@@ -121,7 +121,7 @@ export default function Contact() {
               <div className="text-center py-20">
                 <span className="material-symbols-outlined text-6xl text-primary mb-4">check_circle</span>
                 <h3 className="text-2xl font-bold uppercase tracking-tighter">Transmission Received</h3>
-                <p className="text-white/40 mt-2 text-sm">We'll get back to you shortly.</p>
+                <p className="text-white/60 mt-2 text-sm">We'll get back to you shortly.</p>
               </div>
             ) : (
               <form className="space-y-10 md:space-y-12" onSubmit={handleSubmit}>
@@ -134,7 +134,7 @@ export default function Contact() {
                     <input
                       value={form.name}
                       onChange={e => setForm({...form, name: e.target.value})}
-                      className="w-full bg-transparent border-b border-white/10 py-4 focus:outline-none focus:border-primary text-sm tracking-widest uppercase transition-all duration-300 placeholder:text-white/30"
+                      className="w-full bg-transparent border-b border-white/10 py-4 focus:outline-none focus:border-primary text-sm tracking-widest uppercase transition-all duration-300 placeholder:text-white/50"
                       placeholder="ENTER YOUR NAME"
                       type="text"
                       required
@@ -145,7 +145,7 @@ export default function Contact() {
                     <input
                       value={form.email}
                       onChange={e => setForm({...form, email: e.target.value})}
-                      className="w-full bg-transparent border-b border-white/10 py-4 focus:outline-none focus:border-primary text-sm tracking-widest uppercase transition-all duration-300 placeholder:text-white/30"
+                      className="w-full bg-transparent border-b border-white/10 py-4 focus:outline-none focus:border-primary text-sm tracking-widest uppercase transition-all duration-300 placeholder:text-white/50"
                       placeholder="EMAIL@DOMAIN.COM"
                       type="email"
                       required
@@ -173,7 +173,7 @@ export default function Contact() {
                     <input
                       value={form.budget}
                       onChange={e => setForm({...form, budget: e.target.value})}
-                      className="w-full bg-transparent border-b border-white/10 py-4 focus:outline-none focus:border-primary text-sm tracking-widest uppercase transition-all duration-300 placeholder:text-white/30"
+                      className="w-full bg-transparent border-b border-white/10 py-4 focus:outline-none focus:border-primary text-sm tracking-widest uppercase transition-all duration-300 placeholder:text-white/50"
                       placeholder="ESTIMATED BUDGET"
                       type="text"
                     />
@@ -185,7 +185,7 @@ export default function Contact() {
                   <textarea
                     value={form.message}
                     onChange={e => setForm({...form, message: e.target.value})}
-                    className="w-full bg-transparent border-b border-white/10 py-4 focus:outline-none focus:border-primary text-sm tracking-widest uppercase transition-all duration-300 placeholder:text-white/30 resize-none"
+                    className="w-full bg-transparent border-b border-white/10 py-4 focus:outline-none focus:border-primary text-sm tracking-widest uppercase transition-all duration-300 placeholder:text-white/50 resize-none"
                     placeholder="TELL US ABOUT YOUR WILD VISION..."
                     rows="4"
                     required

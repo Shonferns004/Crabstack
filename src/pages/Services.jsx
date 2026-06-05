@@ -96,7 +96,7 @@ export default function Services() {
             <span className="text-[10px] font-bold tracking-widest text-white/60 uppercase">Systems Online [LIVE]</span>
           </div>
           <div className="h-[1px] w-10 md:w-16 bg-white/20 hidden sm:block"></div>
-          <span className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">CORE-v3.0.1</span>
+          <span className="text-[10px] font-mono text-white/60 uppercase tracking-[0.2em]">CORE-v3.0.1</span>
         </motion.div>
 
         <div className="absolute top-0 left-0 w-24 md:w-32 h-24 md:h-32 border-t border-l border-white/10 m-6 md:m-12 pointer-events-none"></div>

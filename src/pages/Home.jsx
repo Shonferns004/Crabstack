@@ -187,7 +187,7 @@ export default function Home() {
               <h1 className="text-huge font-bold uppercase select-none tracking-tighter">
                 WE BUILD <br /><GlitchText text="DIGITAL EDGES" />
               </h1>
-            <p className="mt-8 text-white/40 text-[10px] sm:text-xs tracking-[0.5em] font-light uppercase max-w-lg mx-auto leading-relaxed border-t border-white/5 pt-8">
+            <p className="mt-8 text-white/60 text-[10px] sm:text-xs tracking-[0.5em] font-light uppercase max-w-lg mx-auto leading-relaxed border-t border-white/5 pt-8">
               Engineering your future with high-end digital architecture
             </p>
           </div>
@@ -202,7 +202,7 @@ export default function Home() {
             <span className="text-[10px] font-bold tracking-widest text-white/60 uppercase">Systems Online [LIVE]</span>
           </div>
           <div className="h-[1px] w-10 md:w-16 bg-white/20 hidden sm:block"></div>
-          <span className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">CORE-v3.0.1</span>
+          <span className="text-[10px] font-mono text-white/60 uppercase tracking-[0.2em]">CORE-v3.0.1</span>
         </div>
 
         <div className="absolute top-0 left-0 w-24 md:w-32 h-24 md:h-32 border-t border-l border-white/10 m-6 md:m-12 pointer-events-none"></div>
@@ -274,7 +274,7 @@ export default function Home() {
                 <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tighter leading-none">SERVICES WE <br />PROVIDE</h2>
               </div>
               <div className="md:col-span-8 flex items-end">
-                <p className="text-white/30 text-sm tracking-[0.1em] max-w-lg font-light leading-relaxed">
+                <p className="text-white/60 text-sm tracking-[0.1em] max-w-lg font-light leading-relaxed">
                   We operate at the intersection of high-end aesthetics and extreme engineering. Our services are tailored for entities requiring absolute digital dominance.
                 </p>
               </div>
@@ -327,7 +327,7 @@ export default function Home() {
           <div className="pt-12 border-t border-white/5">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <p className="text-white/40 font-mono text-xs uppercase tracking-widest">Execution Pipeline _ Phase Sequence</p>
+                <p className="text-white/60 font-mono text-xs uppercase tracking-widest">Execution Pipeline _ Phase Sequence</p>
               </div>
             </ScrollReveal>
             <div className="relative">
@@ -356,7 +356,7 @@ export default function Home() {
                 <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase mb-4 block">Proven_Output</span>
                 <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tighter">Case Files</h2>
               </div>
-              <Link to="/work" className="text-[10px] font-bold tracking-[0.3em] text-white/40 hover:text-white transition-colors">VIEW_ALL_RECORDS</Link>
+              <Link to="/work" className="text-[10px] font-bold tracking-[0.3em] text-white/60 hover:text-white transition-colors">VIEW_ALL_RECORDS</Link>
             </div>
           </div>
 
@@ -384,7 +384,7 @@ export default function Home() {
                   <h3 className="text-lg md:text-2xl font-bold uppercase tracking-tighter text-white">{project.title}</h3>
                 </div>
                 <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <span className="text-white/30 text-[10px] font-mono tracking-widest">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="text-white/60 text-[10px] font-mono tracking-widest">{String(i + 1).padStart(2, '0')}</span>
                 </div>
               </motion.div>
             ))}

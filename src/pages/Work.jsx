@@ -74,7 +74,7 @@ export default function Work() {
             <span className="text-[10px] font-bold tracking-widest text-white/60 uppercase">Systems Online [LIVE]</span>
           </div>
           <div className="h-[1px] w-10 md:w-16 bg-white/20 hidden sm:block"></div>
-          <span className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">CORE-v3.0.1</span>
+          <span className="text-[10px] font-mono text-white/60 uppercase tracking-[0.2em]">CORE-v3.0.1</span>
         </div>
         </section>
       </StoryParallax>
@@ -92,7 +92,7 @@ export default function Work() {
             <div className="w-[10px] h-[10px] bg-primary mt-2 shrink-0"></div>
             <div>
               <h2 className="text-3xl md:text-4xl font-black">{stat.num}</h2>
-              <p className="text-[10px] text-white/40 uppercase tracking-[2px]">{stat.label}</p>
+              <p className="text-[10px] text-white/60 uppercase tracking-[2px]">{stat.label}</p>
             </div>
           </div>
         ))}
@@ -114,7 +114,7 @@ export default function Work() {
                 className={`px-3 md:px-4 py-2 text-[10px] font-bold uppercase transition cursor-pointer ${
                   activeFilter === f.key
                     ? 'bg-primary text-white border border-primary'
-                    : 'border border-white/10 text-white/40 hover:border-primary hover:text-white'
+                    : 'border border-white/10 text-white/60 hover:border-primary hover:text-white'
                 }`}
               >
                 {f.label}
@@ -125,7 +125,7 @@ export default function Work() {
 
         <div className="grid md:grid-cols-2 gap-6 md:gap-8">
           {filtered.length === 0 && (
-            <div className="col-span-full text-center text-white/30 py-20 text-sm uppercase tracking-widest">
+            <div className="col-span-full text-center text-white/60 py-20 text-sm uppercase tracking-widest">
               No projects in this category yet
             </div>
           )}

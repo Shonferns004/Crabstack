@@ -71,7 +71,7 @@ export default function About() {
             <span className="text-[10px] font-bold tracking-widest text-white/60 uppercase">Systems Online [LIVE]</span>
           </div>
           <div className="h-[1px] w-10 md:w-16 bg-white/20 hidden sm:block"></div>
-          <span className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">CORE-v3.0.1</span>
+          <span className="text-[10px] font-mono text-white/60 uppercase tracking-[0.2em]">CORE-v3.0.1</span>
         </motion.div>
 
         <div className="absolute top-0 left-0 w-24 md:w-32 h-24 md:h-32 border-t border-l border-white/10 m-6 md:m-12 pointer-events-none"></div>
@@ -235,17 +235,17 @@ export default function About() {
                   whileHover={{ scale: 1.02 }}
                   className="p-8 md:p-10 border border-white/10 bg-black flex flex-col min-h-[320px] md:min-h-[350px] hover:bg-[#E50914]/10 transition-all duration-500 cursor-pointer group"
                 >
-                  <div className="text-[10px] font-mono text-white/30 mb-8 tracking-widest">{member.num} / {member.tag}</div>
+                  <div className="text-[10px] font-mono text-white/60 mb-8 tracking-widest">{member.num} / {member.tag}</div>
                   <div className="flex-grow">
                     <h3 className="text-4xl md:text-5xl font-bold leading-[0.9] mb-4 whitespace-pre-line">{member.name}</h3>
-                    <p className="text-[10px] font-mono tracking-widest text-white/40 uppercase mb-8">{member.role}</p>
+                    <p className="text-[10px] font-mono tracking-widest text-white/60 uppercase mb-8">{member.role}</p>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="h-[1px] w-4 bg-[#E50914]"></div>
                       <span className="text-[10px] font-mono tracking-widest text-[#E50914] uppercase">{member.trait}</span>
                     </div>
-                    <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-white/30 hover:text-primary transition-colors">
+                    <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-white/60 hover:text-primary transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" className="w-5 h-5">
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.79-1.75-1.764 0-.973.784-1.764 1.75-1.764s1.75.791 1.75 1.764c0 .974-.784 1.764-1.75 1.764zm13.5 11.268h-3v-5.604c0-1.337-.027-3.061-1.865-3.061-1.865 0-2.152 1.456-2.152 2.965v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.379-1.562 2.84-1.562 3.038 0 3.6 2 3.6 4.604v5.591z"/>
                       </svg>
@@ -259,13 +259,13 @@ export default function About() {
                 whileHover={{ scale: 1.02 }}
                 className="p-8 md:p-10 border border-white/10 bg-black flex flex-col min-h-[320px] md:min-h-[350px] hover:bg-white/[0.02] transition-all duration-500 cursor-pointer group"
               >
-                <div className="text-[10px] font-mono text-white/30 mb-8 tracking-widest">06 / CAREERS</div>
+                <div className="text-[10px] font-mono text-white/60 mb-8 tracking-widest">06 / CAREERS</div>
                 <div className="flex-grow flex items-center">
-                  <h3 className="text-3xl md:text-4xl font-bold leading-[0.9] mb-4 text-white/20 group-hover:text-white/40 transition-colors uppercase">Your<br />Role</h3>
+                  <h3 className="text-3xl md:text-4xl font-bold leading-[0.9] mb-4 text-white/50 group-hover:text-white/60 transition-colors uppercase">Your<br />Role</h3>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="h-[1px] w-4 bg-white/20 group-hover:bg-[#E50914] transition-colors"></div>
-                  <span className="text-[10px] font-mono tracking-widest text-white/20 group-hover:text-[#E50914] transition-colors uppercase">Apply Now</span>
+                  <span className="text-[10px] font-mono tracking-widest text-white/50 group-hover:text-[#E50914] transition-colors uppercase">Apply Now</span>
                 </div>
               </motion.div>
               </ScrollTransform3D>

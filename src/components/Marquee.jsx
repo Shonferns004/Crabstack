@@ -13,7 +13,7 @@ export default function Marquee({ items, className = '' }) {
           {[...items, ...items].map((item, i) => (
             <span
               key={i}
-              className="text-base md:text-xl font-bold uppercase text-white/20 hover:text-primary transition-colors duration-300 cursor-default whitespace-nowrap"
+              className="text-base md:text-xl font-bold uppercase text-white/50 hover:text-primary transition-colors duration-300 cursor-default whitespace-nowrap"
             >
               {item}
             </span>
