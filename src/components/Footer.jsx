@@ -107,7 +107,7 @@ export default function Footer() {
 
             <div className="flex items-center gap-6 md:gap-12 mt-16 md:mt-24 flex-wrap">
               <span className="text-[10px] text-white/50 font-bold tracking-[0.5em]">
-                {s.copyright ? s.copyright.replace('{year}', year).replace('{YEAR}', year) : '©' + year + ' CRABSTACK'}
+                {'\u00A9' + year + ' CRABSTACK. ALL RIGHTS RESERVED.'}
               </span>
               <div className="h-[1px] flex-grow bg-white/5 min-w-[40px]"></div>
               <div className="flex gap-6 md:gap-8">
