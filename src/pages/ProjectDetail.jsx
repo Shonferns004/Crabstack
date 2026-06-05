@@ -125,6 +125,18 @@ export default function ProjectDetail() {
                 Client: <span className="text-white/80">{project.client_name}</span>
               </p>
             )}
+            <div className="flex gap-4 mt-8">
+              {project.preview_link && project.tags?.some(t => t.toLowerCase() === 'website') && (
+                <a href={project.preview_link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-primary hover:bg-primary/80 text-white px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition">
+                  Visit Website &rarr;
+                </a>
+              )}
+              {project.github_repo && project.tags?.some(t => t.toLowerCase() === 'app') && (
+                <a href={project.github_repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider border border-zinc-700 transition">
+                  View Source Code &rarr;
+                </a>
+              )}
+            </div>
           </motion.div>
         </div>
       </section>
