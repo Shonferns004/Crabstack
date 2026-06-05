@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { API_URL } from '../apiUrl'
+import { API_URL, slugify } from '../apiUrl'
 
 function MobileFrame({ src, alt }) {
   return (
@@ -40,7 +40,7 @@ function BrowserFrame({ src, alt }) {
 }
 
 export default function ProjectDetail() {
-  const { id } = useParams()
+  const { id: slug } = useParams()
   const [project, setProject] = useState(null)
   const [images, setImages] = useState([])
   const [otherProjects, setOtherProjects] = useState([])
@@ -48,19 +48,26 @@ export default function ProjectDetail() {
 
   useEffect(() => {
     setLoading(true)
-    Promise.all([
-      fetch(`${API_URL}/projects/${id}`).then(r => r.json()),
-      fetch(`${API_URL}/projects/${id}/images`).then(r => r.json()),
-      fetch(`${API_URL}/projects`).then(r => r.json()),
-    ])
-      .then(([proj, imgs, all]) => {
-        setProject(proj)
+    fetch(`${API_URL}/projects`)
+      .then(r => r.json())
+      .then(all => {
+        const list = Array.isArray(all) ? all : []
+        const found = list.find(p => slugify(p.title) === slug)
+        if (!found) {
+          setProject(null)
+          setLoading(false)
+          return
+        }
+        setProject(found)
+        setOtherProjects(list.filter(p => p.id !== found.id).slice(0, 3))
+        return fetch(`${API_URL}/projects/${found.id}/images`).then(r => r.json())
+      })
+      .then(imgs => {
         setImages(Array.isArray(imgs) ? imgs : [])
-        setOtherProjects((Array.isArray(all) ? all : []).filter(p => p.id !== id).slice(0, 3))
       })
       .catch(() => {})
       .finally(() => setLoading(false))
-  }, [id])
+  }, [slug])
 
   if (loading) {
     return (
@@ -230,7 +237,7 @@ export default function ProjectDetail() {
               {otherProjects.map((p, i) => (
                 <Link
                   key={p.id}
-                  to={`/work/${p.id}`}
+                  to={`/work/${slugify(p.title)}`}
                   className="group relative h-[260px] overflow-hidden flex flex-col justify-end p-6 bg-[#111]"
                 >
                   <img

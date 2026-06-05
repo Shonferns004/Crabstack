@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import GlitchText from '../components/GlitchText'
 import StoryParallax from '../components/StoryParallax'
-import { API_URL } from '../apiUrl'
+import { API_URL, slugify } from '../apiUrl'
 
 export default function Work() {
   const [projects, setProjects] = useState([])
@@ -133,7 +133,7 @@ export default function Work() {
           {filtered.map((project, i) => (
             <Link
               key={project.id || project.title}
-              to={`/work/${project.id}`}
+               to={`/work/${slugify(project.title)}`}
               className="relative bg-[#111] h-[320px] md:h-[400px] overflow-hidden flex flex-col justify-end p-6 md:p-8 group transition-all duration-300 cursor-pointer"
             >
               <img
