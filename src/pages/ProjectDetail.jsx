@@ -89,6 +89,8 @@ export default function ProjectDetail() {
 
   const mobileImages = images.filter(i => i.device_type === 'mobile')
   const websiteImages = images.filter(i => i.device_type === 'website')
+  const posterImages = images.filter(i => i.device_type === 'poster')
+  const eventImages = images.filter(i => i.device_type === 'event')
 
   return (
     <div className="min-h-screen bg-black">
@@ -104,7 +106,7 @@ export default function ProjectDetail() {
         </div>
         <div className="max-w-7xl mx-auto px-6 w-full">
           <Link to="/work" className="inline-flex items-center gap-2 text-white/50 hover:text-primary text-xs font-mono uppercase tracking-widest mb-6 transition-colors">
-            <span>&larr;</span> Back to Work
+            <span>←</span> Back to Work
           </Link>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -128,69 +130,38 @@ export default function ProjectDetail() {
             <div className="flex gap-4 mt-8">
               {project.preview_link && project.tags?.some(t => t.toLowerCase() === 'website') && (
                 <a href={project.preview_link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-primary hover:bg-primary/80 text-white px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition">
-                  Visit Website &rarr;
+                  Visit Website →
                 </a>
               )}
               {project.github_repo && project.tags?.some(t => t.toLowerCase() === 'app') && (
                 <a href={project.github_repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider border border-zinc-700 transition">
-                  View Source Code &rarr;
+                  View Source Code →
                 </a>
               )}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Thumbnail */}
-      {project.image_url && (
-        <section className="py-8 px-6">
-          <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="rounded-xl overflow-hidden border border-white/5"
-            >
-              <img src={project.image_url} alt={project.title} className="w-full h-auto object-cover" />
+              </div>
             </motion.div>
           </div>
         </section>
-      )}
 
-      {/* Description */}
-      {project.description && (
-        <section className="py-16 md:py-24 px-6">
-          <div className="max-w-4xl mx-auto">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-white/70 text-lg md:text-xl leading-relaxed"
-            >
-              {project.description}
-            </motion.p>
-          </div>
-        </section>
-      )}
-
-      {/* Website Screenshots */}
-      {websiteImages.length > 0 && (
-        <section className="py-16 md:py-24 px-6 bg-white/[0.01] border-t border-white/5">
+      {/* Poster Images */}
+      {posterImages.length > 0 && (
+        <section className="py-16 md:py-24 px-6 border-t border-white/5 bg-white/[0.01]">
           <div className="max-w-7xl mx-auto">
             <div className="mb-10">
-              <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">Desktop View</span>
-              <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-white mt-2">Website Screenshots</h2>
+              <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">Posters</span>
+              <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-white mt-2">Posters</h2>
             </div>
             <div className="space-y-12">
-              {websiteImages.map((img, i) => (
+              {posterImages.map((img, i) => (
                 <motion.div
                   key={img.id || i}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: i * 0.15 }}
+                  className="rounded-xl overflow-hidden border border-white/5"
                 >
-                  <BrowserFrame src={img.image_url} alt={`${project.title} screenshot ${i + 1}`} />
+                  <img src={img.image_url} alt={`${project.title} poster ${i + 1}`} className="w-full h-auto object-cover" />
                 </motion.div>
               ))}
             </div>
@@ -198,24 +169,25 @@ export default function ProjectDetail() {
         </section>
       )}
 
-      {/* Mobile Screenshots */}
-      {mobileImages.length > 0 && (
+      {/* Event Images */}
+      {eventImages.length > 0 && (
         <section className="py-16 md:py-24 px-6 border-t border-white/5">
           <div className="max-w-7xl mx-auto">
             <div className="mb-10">
-              <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">Mobile View</span>
-              <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-white mt-2">Mobile Screenshots</h2>
+              <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">Event Gallery</span>
+              <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-white mt-2">Event Images</h2>
             </div>
-            <div className="flex flex-wrap gap-8 justify-center">
-              {mobileImages.map((img, i) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {eventImages.map((img, i) => (
                 <motion.div
                   key={img.id || i}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: i * 0.15 }}
+                  className="rounded-xl overflow-hidden border border-white/5 aspect-[4/3]"
                 >
-                  <MobileFrame src={img.image_url} alt={`${project.title} mobile ${i + 1}`} />
+                  <img src={img.image_url} alt={`${project.title} event ${i + 1}`} className="w-full h-full object-cover" />
                 </motion.div>
               ))}
             </div>
@@ -264,7 +236,7 @@ export default function ProjectDetail() {
                     <h3 className="text-lg font-bold uppercase tracking-tighter text-white">{p.title}</h3>
                   </div>
                   <span className="absolute right-6 bottom-6 text-[10px] uppercase font-bold z-10 group-hover:text-primary transition-colors">
-                    View &rarr;
+                    View →
                   </span>
                 </Link>
               ))}
