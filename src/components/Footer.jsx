@@ -105,12 +105,7 @@ export default function Footer() {
               )}
             </div>
 
-            <div className="flex items-center gap-6 md:gap-12 mt-16 md:mt-24 flex-wrap">
-              <span className="text-[10px] text-white/50 font-bold tracking-[0.5em]">
-                {'\u00A9' + year + ' CRABSTACK. ALL RIGHTS RESERVED.'}
-              </span>
-              <div className="h-[1px] flex-grow bg-white/5 min-w-[40px]"></div>
-              <div className="flex gap-6 md:gap-8">
+            <div className="flex items-center justify-end gap-6 md:gap-8 mt-16 md:mt-24">
                 {(s.social_twitter || s.social_instagram || s.social_linkedin) ? (
                   <>
                     {s.social_twitter && <a href={s.social_twitter} target="_blank" rel="noopener noreferrer" className="text-[10px] text-white/60 hover:text-primary transition-colors font-bold tracking-widest min-w-[28px] min-h-[28px] flex items-center justify-center">TW</a>}
@@ -128,7 +123,6 @@ export default function Footer() {
             </div>
           </div>
         </div>
-      </div>
-    </footer>
+      </footer>
   )
 }
