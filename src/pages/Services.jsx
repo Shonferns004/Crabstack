@@ -15,7 +15,7 @@ const services = [
     items: [
       { icon: 'code', title: 'Web Development', desc: 'High-performance, scalable web ecosystems built with the latest stack.' },
       { icon: 'cloud_done', title: 'SaaS Solutions', desc: 'Custom architectural blueprints for modern software-as-a-service platforms.' },
-      { icon: 'settings_input_component', title: 'Technical Systems Setup', desc: 'Complex deployments and dev-ops infrastructures for enterprise scale.' },
+      { icon: 'phone_android', title: 'App Development', desc: 'Native and cross-platform mobile applications engineered for performance and scale.' },
     ],
     bg: false,
   },
@@ -24,6 +24,7 @@ const services = [
     items: [
       { icon: 'palette', title: 'UI/UX Design', desc: 'Immersive digital interfaces optimized for high-conversion and emotion.' },
       { icon: 'design_services', title: 'Product Design', desc: 'End-to-end product development from conceptual sketches to prototype.' },
+      { icon: 'brush', title: 'Graphic Design', desc: 'Brand identity, visual assets, and compelling design systems that leave a lasting impression.' },
     ],
     bg: true,
   },
@@ -43,6 +44,15 @@ const services = [
       { icon: 'camera_enhance', title: 'Photo Manipulation', desc: 'Professional retouching, compositing, and visual asset creation at scale.' },
     ],
     bg: true,
+  },
+  {
+    num: '05', title: 'Event Management', subtitle: 'Experiences That Matter.',
+    items: [
+      { icon: 'event', title: 'Event Planning & Coordination', desc: 'End-to-end event management from concept to execution, ensuring seamless experiences.' },
+      { icon: 'celebration', title: 'Live Event Production', desc: 'Technical production, staging, and on-site management for events of any scale.' },
+      { icon: 'groups', title: 'Community & Meetups', desc: 'Strategic community building through curated networking events and brand activations.' },
+    ],
+    bg: false,
   },
 ]
 
