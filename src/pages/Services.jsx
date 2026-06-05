@@ -181,11 +181,11 @@ export default function Services() {
                 onClick={() => {
                   const a = document.createElement('a')
                   a.href = stackPdf
-                  a.download = 'crabstack-stack.pdf'
+                  a.download = 'crabstack-brochure.pdf'
                   a.click()
                 }}
               >
-                Download Stack
+                Download Brochure
               </motion.button>
             </div>
           </div>
