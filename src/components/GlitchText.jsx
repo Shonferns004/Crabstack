@@ -1,7 +1,9 @@
 export default function GlitchText({ text, className = '' }) {
+  const outerClass = className.replace(/\btext-\S+/g, '').trim()
+  const colorClass = className.match(/\btext-\S+/g)?.[0] || 'text-transparent'
   return (
-    <span className={`relative inline-block ${className}`}>
-      <span className="glitch-outline text-transparent">{text}</span>
+    <span className={`relative inline-block ${outerClass}`}>
+      <span className={`glitch-outline ${colorClass}`}>{text}</span>
       <span
         aria-hidden="true"
         className="absolute inset-0 text-transparent select-none pointer-events-none"

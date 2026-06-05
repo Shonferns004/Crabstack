@@ -53,7 +53,7 @@ export default function About() {
             className="text-[clamp(2.5rem,10vw,8rem)] font-bold uppercase select-none tracking-tighter leading-[0.95]"
           >
             WE ARE <br />
-            <GlitchText text="CRABSTACK" />
+            <GlitchText text="CRABSTACK" className="text-primary" />
           </motion.h1>
         </div>
 
