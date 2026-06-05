@@ -131,6 +131,7 @@ function Counter({ target, suffix = '+' }) {
 export default function Home() {
   const [projects, setProjects] = useState([])
   const [testimonials, setTestimonials] = useState([])
+  const [hoveredTestimonials, setHoveredTestimonials] = useState(false)
   const strategyRef = useRef(null)
   useEffect(() => {
     fetch(`${API_URL}/projects`)
@@ -415,12 +416,15 @@ export default function Home() {
           </div>
         </ScrollReveal>
         <Parallax speed={0.2}>
-        <div className="relative w-full">
+        <div className="relative w-full" onMouseEnter={() => setHoveredTestimonials(true)} onMouseLeave={() => setHoveredTestimonials(false)}>
           <div className="overflow-hidden">
             <motion.div
               className="flex gap-6 md:gap-10 w-max px-6"
               animate={{ x: ['0%', '-50%'] }}
-              transition={{ duration: 40, ease: 'linear', repeat: Infinity }}
+              transition={hoveredTestimonials
+                ? { duration: 9999, ease: 'linear' }
+                : { duration: 40, ease: 'linear', repeat: Infinity }
+              }
             >
               {[...testimonials, ...testimonials].map((t, i) => (
                 <div key={i} className="w-[340px] md:w-[420px] min-h-[240px] flex-shrink-0 flex flex-col justify-between gap-4 border-l-2 border-primary/20 pl-6 bg-zinc-900/20 p-5 md:p-6 rounded">

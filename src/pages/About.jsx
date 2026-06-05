@@ -16,10 +16,28 @@ const values = [
 ]
 
 const team = [
-  { num: '01', tag: 'CORE', name: 'RAMON\nBAKURI', role: 'Founder & Managing Director', trait: 'Radicalism' },
-  { num: '02', tag: 'EXPERIENCE', name: 'BENJAMIN\nAROKIARAJ', role: 'Co-Founder & Director of Creative Strategy', trait: 'Brutalist' },
-  { num: '03', tag: 'MOMENTUM', name: 'CROSBY\nDIAS', role: 'Director of Growth & Marketing', trait: 'Precision' },
-]
+  {
+    num: "01",
+    tag: "CORE",
+    name: "RAMON\nBAKURI",
+    role: "Founder & Managing Director",
+    trait: "Radicalism",
+  },
+  {
+    num: "02",
+    tag: "EXPERIENCE",
+    name: "BENJAMIN\nAROCKIARAJ",
+    role: "Co-Founder & Director of Creative Strategy",
+    trait: "Brutalist",
+  },
+  {
+    num: "03",
+    tag: "INFRASTRUCTURE",
+    name: "SHON\FERNANDES",
+    role: "Director of Technical Architecture",
+    trait: "Velocity",
+  },
+];
 
 export default function About() {
   return (
