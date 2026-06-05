@@ -179,10 +179,16 @@ export default function Services() {
                 whileHover={{ scale: 1.05 }}
                 className="border border-black/40 text-white px-10 md:px-12 py-5 rounded-lg font-bold transition-all hover:bg-black/20 cursor-pointer"
                 onClick={() => {
-                  const a = document.createElement('a')
-                  a.href = stackPdf
-                  a.download = 'crabstack-brochure.pdf'
-                  a.click()
+                  fetch(stackPdf)
+                    .then(r => r.blob())
+                    .then(blob => {
+                      const url = URL.createObjectURL(blob)
+                      const a = document.createElement('a')
+                      a.href = url
+                      a.download = 'crabstack-brochure.pdf'
+                      a.click()
+                      URL.revokeObjectURL(url)
+                    })
                 }}
               >
                 Download Brochure
