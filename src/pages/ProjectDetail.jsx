@@ -122,6 +122,22 @@ export default function ProjectDetail() {
         </div>
       </section>
 
+      {/* Thumbnail */}
+      {project.image_url && (
+        <section className="py-8 px-6">
+          <div className="max-w-5xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="rounded-xl overflow-hidden border border-white/5"
+            >
+              <img src={project.image_url} alt={project.title} className="w-full h-auto object-cover" />
+            </motion.div>
+          </div>
+        </section>
+      )}
+
       {/* Description */}
       {project.description && (
         <section className="py-16 md:py-24 px-6">
@@ -139,7 +155,7 @@ export default function ProjectDetail() {
       )}
 
       {/* Website Screenshots */}
-      {(project.image_url || websiteImages.length > 0) && (
+      {websiteImages.length > 0 && (
         <section className="py-16 md:py-24 px-6 bg-white/[0.01] border-t border-white/5">
           <div className="max-w-7xl mx-auto">
             <div className="mb-10">
@@ -147,23 +163,13 @@ export default function ProjectDetail() {
               <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-white mt-2">Website Screenshots</h2>
             </div>
             <div className="space-y-12">
-              {project.image_url && (
-                <motion.div
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <BrowserFrame src={project.image_url} alt={`${project.title} thumbnail`} />
-                </motion.div>
-              )}
               {websiteImages.map((img, i) => (
                 <motion.div
                   key={img.id || i}
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: (project.image_url ? 1 : 0) + i * 0.15 }}
+                  transition={{ duration: 0.6, delay: i * 0.15 }}
                 >
                   <BrowserFrame src={img.image_url} alt={`${project.title} screenshot ${i + 1}`} />
                 </motion.div>
