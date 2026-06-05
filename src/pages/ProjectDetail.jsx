@@ -43,6 +43,7 @@ export default function ProjectDetail() {
   const { id } = useParams()
   const [project, setProject] = useState(null)
   const [images, setImages] = useState([])
+  const [otherProjects, setOtherProjects] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -50,10 +51,12 @@ export default function ProjectDetail() {
     Promise.all([
       fetch(`${API_URL}/projects/${id}`).then(r => r.json()),
       fetch(`${API_URL}/projects/${id}/images`).then(r => r.json()),
+      fetch(`${API_URL}/projects`).then(r => r.json()),
     ])
-      .then(([proj, imgs]) => {
+      .then(([proj, imgs, all]) => {
         setProject(proj)
         setImages(Array.isArray(imgs) ? imgs : [])
+        setOtherProjects((Array.isArray(all) ? all : []).filter(p => p.id !== id).slice(0, 3))
       })
       .catch(() => {})
       .finally(() => setLoading(false))
@@ -204,6 +207,41 @@ export default function ProjectDetail() {
                 <span key={tag} className="text-[10px] font-bold tracking-[0.2em] uppercase bg-zinc-900 border border-zinc-800 px-4 py-2 text-zinc-400">
                   {tag}
                 </span>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {otherProjects.length > 0 && (
+        <section className="py-24 px-6 border-t border-white/5 bg-white/[0.01]">
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-12">
+              <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">More Work</span>
+              <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-tighter text-white mt-2">Other Projects</h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {otherProjects.map((p, i) => (
+                <Link
+                  key={p.id}
+                  to={`/work/${p.id}`}
+                  className="group relative h-[260px] overflow-hidden flex flex-col justify-end p-6 bg-[#111]"
+                >
+                  <img
+                    src={p.image_url || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b'}
+                    alt={p.title}
+                    className="absolute inset-0 w-full h-full object-cover opacity-40 transition duration-500 group-hover:opacity-60 group-hover:scale-105"
+                  />
+                  <div className="relative z-10">
+                    <span className="text-primary text-[9px] font-bold tracking-[0.3em] uppercase block mb-1">
+                      {p.tags?.[0] || p.client_name || 'Project'}
+                    </span>
+                    <h3 className="text-lg font-bold uppercase tracking-tighter text-white">{p.title}</h3>
+                  </div>
+                  <span className="absolute right-6 bottom-6 text-[10px] uppercase font-bold z-10 group-hover:text-primary transition-colors">
+                    View &rarr;
+                  </span>
+                </Link>
               ))}
             </div>
           </div>
