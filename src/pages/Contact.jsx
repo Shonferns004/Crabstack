@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import ScrollReveal from '../components/ScrollReveal'
 import GlitchText from '../components/GlitchText'
+import StoryParallax from '../components/StoryParallax'
 import { API_URL } from '../apiUrl'
 
 export default function Contact() {
@@ -40,6 +41,7 @@ export default function Contact() {
       <div className="grain"></div>
 
       {/* Hero */}
+      <StoryParallax>
       <section className="relative min-h-screen flex items-center justify-center px-4">
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(230,10,21,0.12),transparent_70%)]"></div>
@@ -101,8 +103,10 @@ export default function Contact() {
           <span className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">CORE-v3.0.1</span>
         </motion.div>
       </section>
+      </StoryParallax>
 
       {/* Form */}
+      <StoryParallax>
       <ScrollReveal>
         <section className="py-16 md:py-20 px-6 bg-black border-t border-white/5" id="inquiry-form">
           <div className="max-w-4xl mx-auto">
@@ -203,6 +207,7 @@ export default function Contact() {
           </div>
         </section>
       </ScrollReveal>
+      </StoryParallax>
 
       {/* Decorative */}
       <div

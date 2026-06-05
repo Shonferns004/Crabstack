@@ -11,6 +11,7 @@ import Parallax from '../components/Parallax'
 import Marquee from '../components/Marquee'
 import GlitchText from '../components/GlitchText'
 import ZoomReveal from '../components/ZoomReveal'
+import StoryParallax from '../components/StoryParallax'
 import { API_URL } from '../apiUrl'
 
 const techItems = [
@@ -131,8 +132,6 @@ export default function Home() {
   const [projects, setProjects] = useState([])
   const [testimonials, setTestimonials] = useState([])
   const strategyRef = useRef(null)
-  const { scrollY } = useScroll()
-
   useEffect(() => {
     fetch(`${API_URL}/projects`)
       .then(res => res.json())
@@ -141,14 +140,8 @@ export default function Home() {
     fetch(`${API_URL}/testimonials`)
       .then(res => res.json())
       .then(data => setTestimonials(Array.isArray(data) ? data : []))
-      .catch(() => setTestimonials([]))
+      .catch(() => setProjects([]))
   }, [])
-  const crabScale = useTransform(scrollY, [0, 200], [0.3, 3])
-  const overlayOpacity = useTransform(scrollY, [0, 250], [1, 0])
-  const heroReveal = useTransform(scrollY, [150, 350], [0, 1])
-  const heroY1 = useTransform(heroReveal, [0, 1], [20, 0])
-  const heroY2 = useTransform(heroReveal, [0, 1], [40, 0])
-  const subtitleOpacity = useTransform(heroReveal, [0.3, 1], [0, 1])
 
   const { scrollYProgress: strategyProgress } = useScroll({
     target: strategyRef,
@@ -165,8 +158,9 @@ export default function Home() {
 
   return (
     <>
-      {/* ===== STICKY HERO ===== */}
-      <section className="sticky top-0 h-screen w-full overflow-hidden bg-black z-0 flex flex-col items-center justify-center px-4">
+      {/* ===== HERO ===== */}
+      <StoryParallax>
+      <section className="relative min-h-screen w-full overflow-hidden bg-black flex flex-col items-center justify-center px-4">
         <div className="grain"></div>
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ perspective: '1200px', overflow: 'hidden', zIndex: -1 }}>
           <div
@@ -181,47 +175,23 @@ export default function Home() {
           />
         </div>
 
-        {/* Crabstack overlay — covers hero initially, zooms & fades on scroll */}
-        <motion.div
-          style={{ opacity: overlayOpacity }}
-          className="absolute inset-0 bg-black z-10 flex items-center justify-center"
-        >
-          <motion.div style={{ scale: crabScale }} className="origin-center">
-            <span className="text-5xl md:text-8xl font-bold uppercase tracking-[0.3em] text-white/90">
-              Crabstack
-            </span>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          style={{ opacity: heroReveal, y: heroY2 }}
-          className="w-full h-full flex flex-col items-center justify-center"
-        >
-          <motion.div
-            style={{ opacity: heroReveal, y: heroY1 }}
-            className="relative z-20 mb-8 flex flex-col items-center"
-          >
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <div className="relative z-20 mb-8 flex flex-col items-center">
             <div className="bg-primary px-4 py-1 rounded-sm shadow-[0_0_20px_rgba(230,10,21,0.3)]">
               <span className="text-[11px] font-bold tracking-[0.4em] text-white uppercase">WE'RE CRABSTACK</span>
             </div>
             <div className="h-16 w-[1px] bg-gradient-to-b from-primary to-transparent mt-2 opacity-50"></div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            style={{ opacity: heroReveal, y: heroY2 }}
-            className="relative z-10 text-center max-w-7xl mx-auto"
-          >
-            <h1 className="text-huge font-bold uppercase select-none tracking-tighter">
-              WE BUILD <br />DIGITAL EDGES
-            </h1>
-            <motion.p
-              style={{ opacity: subtitleOpacity }}
-              className="mt-8 text-white/40 text-[10px] sm:text-xs tracking-[0.5em] font-light uppercase max-w-lg mx-auto leading-relaxed border-t border-white/5 pt-8"
-            >
+          <div className="relative z-10 text-center max-w-7xl mx-auto">
+              <h1 className="text-huge font-bold uppercase select-none tracking-tighter">
+                WE BUILD <br /><GlitchText text="DIGITAL EDGES" />
+              </h1>
+            <p className="mt-8 text-white/40 text-[10px] sm:text-xs tracking-[0.5em] font-light uppercase max-w-lg mx-auto leading-relaxed border-t border-white/5 pt-8">
               Engineering your future with high-end digital architecture
-            </motion.p>
-          </motion.div>
-        </motion.div>
+            </p>
+          </div>
+        </div>
 
         <div className="absolute bottom-6 md:bottom-10 left-4 md:left-10 flex items-center gap-4 md:gap-6 z-20 flex-wrap">
           <div className="flex items-center gap-3">
@@ -240,14 +210,12 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 w-24 md:w-32 h-24 md:h-32 border-b border-l border-white/10 m-6 md:m-12 pointer-events-none"></div>
         <div className="absolute bottom-0 right-0 w-24 md:w-32 h-24 md:h-32 border-b border-r border-white/10 m-6 md:m-12 pointer-events-none"></div>
       </section>
+      </StoryParallax>
 
-      {/* Spacer — hero stays visible here before content covers it */}
-      <div className="h-screen"></div>
-
-      {/* All content below hero — stacks on top as it scrolls up */}
-      <div className="relative z-10 bg-black">
+      <div className="bg-black">
 
       {/* Identity - Fey-style 3D scroll */}
+      <StoryParallax>
       <ZoomReveal>
       <section className="sticky top-0 min-h-screen px-6 md:px-20 py-24 md:py-40 bg-black scroll-snap-child" id="identity">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
@@ -263,15 +231,9 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
               <img
                 className="w-full h-full object-cover transition-all duration-700 opacity-60"
-                src="/crab2.0.png"
+                src="/new.png"
                 alt="Crabstack"
               />
-              <div className="absolute bottom-8 left-8 z-20">
-                <Counter target={10} suffix="+" />
-                <div className="text-sm font-mono tracking-widest text-slate-500 uppercase">
-                  Major Events Hosted
-                </div>
-              </div>
             </div>
             <div className="absolute -top-10 -right-10 hidden lg:block w-48 h-48 border-2 border-primary/20 rounded-full flex items-center justify-center p-4">
               <div className="w-full h-full border border-primary/40 rounded-full animate-pulse"></div>
@@ -289,22 +251,20 @@ export default function Home() {
             <p className="text-slate-400 text-lg leading-relaxed">
               Reliability, strength, and innovation at our core. We create high-impact digital products with an asymmetric, brutalist approach. We don't just build websites; we engineer market dominance.
             </p>
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-8">
               <div className="p-6 border-l-2 border-primary bg-primary/5">
-                <div className="text-4xl font-bold text-white counter" data-target="50">0+</div>
+                <div className="text-4xl font-bold text-white">{projects.length}+</div>
                 <div className="text-xs font-mono uppercase text-slate-500 mt-2">Projects Delivered</div>
-              </div>
-              <div className="p-6 border-l-2 border-primary bg-primary/5">
-                <div className="text-4xl font-bold text-white counter" data-target="100">0%</div>
-                <div className="text-xs font-mono uppercase text-slate-500 mt-2">Technical Uptime</div>
               </div>
             </div>
           </ScrollReveal>
         </div>
       </section>
       </ZoomReveal>
+      </StoryParallax>
 
       {/* Services */}
+      <StoryParallax>
       <ZoomReveal>
         <section id="services" className="sticky top-0 min-h-screen py-24 md:py-32 px-6 bg-black text-white scroll-snap-child">
           <div className="max-w-7xl mx-auto">
@@ -346,6 +306,7 @@ export default function Home() {
           </div>
         </section>
       </ZoomReveal>
+      </StoryParallax>
 
       {/* Marquee */}
       <Parallax speed={0.15}>
@@ -353,6 +314,7 @@ export default function Home() {
       </Parallax>
 
       {/* Strategy Lab */}
+      <StoryParallax>
       <ZoomReveal>
       <section ref={strategyRef} className="sticky top-0 min-h-screen py-24 md:py-32 px-6 border-y border-white/5 bg-[#050505] relative overflow-hidden text-white scroll-snap-child">
         <div className="max-w-4xl mx-auto relative z-10">
@@ -382,10 +344,12 @@ export default function Home() {
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
       </section>
       </ZoomReveal>
+      </StoryParallax>
 
-      {/* Portfolio - Auto-scroll carousel */}
+      {/* Portfolio - Asymmetric Gallery */}
+      <StoryParallax>
       <ZoomReveal>
-        <section id="work" className="sticky top-0 min-h-screen py-24 md:py-32 px-6 overflow-hidden">
+        <section id="work" className="sticky top-0 min-h-screen py-24 md:py-32 px-6 bg-black">
           <div className="max-w-7xl mx-auto mb-16">
             <div className="flex items-end justify-between">
               <div>
@@ -395,7 +359,37 @@ export default function Home() {
               <Link to="/work" className="text-[10px] font-bold tracking-[0.3em] text-white/40 hover:text-white transition-colors">VIEW_ALL_RECORDS</Link>
             </div>
           </div>
-          <Carousel items={projects} />
+
+          <div className="max-w-7xl mx-auto columns-1 md:columns-2 gap-4 space-y-4">
+            {projects.map((project, i) => (
+              <motion.div
+                key={project.id || i}
+                initial={{ opacity: 0, y: 80, rotateX: i % 2 === 0 ? 5 : -5 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.8, delay: i * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className={`break-inside-avoid overflow-hidden rounded-xl border border-white/5 bg-zinc-900/30 group relative ${i === 0 || i === 3 || i === 5 ? 'md:aspect-[3/4]' : 'md:aspect-[4/3]'}`}
+              >
+                <img
+                  src={project.image_url || '/MHB.png'}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:grayscale-0 grayscale opacity-60 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="h-px w-6 bg-primary"></span>
+                    <span className="text-primary text-[9px] font-bold tracking-[0.3em] uppercase">{project.tags?.[0] || project.client_name || 'Project'}</span>
+                  </div>
+                  <h3 className="text-lg md:text-2xl font-bold uppercase tracking-tighter text-white">{project.title}</h3>
+                </div>
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <span className="text-white/30 text-[10px] font-mono tracking-widest">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
           <div className="flex justify-center mt-16">
             <Link to="/work" className="group relative px-10 py-4 bg-neutral-900 border border-primary text-primary font-mono text-sm font-bold uppercase tracking-[0.2em] transition-all hover:bg-primary hover:text-white hover:shadow-[0_0_20px_rgba(230,10,21,0.4)] overflow-hidden hover:scale-105">
               <span className="relative z-10">Explore More</span>
@@ -404,8 +398,10 @@ export default function Home() {
           </div>
         </section>
       </ZoomReveal>
+      </StoryParallax>
 
       {/* Testimonials */}
+      <StoryParallax>
       <ZoomReveal>
       <section className="sticky top-0 min-h-screen bg-black overflow-hidden py-24 md:py-32 w-full scroll-snap-child">
         <ScrollReveal>
@@ -442,108 +438,13 @@ export default function Home() {
         </Parallax>
       </section>
       </ZoomReveal>
+      </StoryParallax>
 
       </div>
     </>
   )
 }
 
-function Carousel({ items }) {
-  const itemCount = items.length
-  const [activeIndex, setActiveIndex] = useState(itemCount)
-  const [isHovered, setIsHovered] = useState(false)
-  const isSnap = useRef(false)
-  const cardW = 340
-  const gap = 24
 
-  useEffect(() => {
-    if (itemCount === 0 || isHovered) return
-    const interval = setInterval(() => {
-      setActiveIndex(prev => prev + 1)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [isHovered, itemCount])
-
-  useEffect(() => {
-    if (activeIndex >= itemCount * 2) {
-      isSnap.current = true
-      setActiveIndex(itemCount)
-    }
-  }, [activeIndex, itemCount])
-
-  useEffect(() => {
-    if (isSnap.current) {
-      isSnap.current = false
-    }
-  })
-
-  if (itemCount === 0) return null
-
-  const extended = [...items, ...items, ...items]
-
-  return (
-    <div className="relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-      <div className="relative w-full overflow-hidden" style={{ height: '400px' }}>
-        {extended.map((project, globalIdx) => {
-          const offset = globalIdx - activeIndex
-          const dist = Math.abs(offset)
-          const isActive = offset === 0
-          const isVisible = dist <= 2
-
-          return (
-            <motion.div
-              key={globalIdx}
-              className="absolute top-0 cursor-pointer"
-              style={{
-                width: cardW,
-                left: `calc(50% - ${cardW / 2}px)`,
-                pointerEvents: isVisible ? 'auto' : 'none',
-              }}
-              animate={{
-                x: offset * (cardW + gap),
-                scale: isVisible ? 1 - dist * 0.18 : 0.4,
-                opacity: isVisible ? 1 - dist * 0.4 : 0,
-                zIndex: isVisible ? 20 - dist : 0,
-              }}
-              transition={isSnap.current ? { duration: 0 } : { type: 'spring', stiffness: 200, damping: 25 }}
-              onClick={() => isVisible && setActiveIndex(globalIdx)}
-            >
-              <div className="aspect-square overflow-hidden bg-white/5 relative rounded-xl">
-                <motion.img
-                  src={project.image_url || '/MHB.png'}
-                  alt={project.title}
-                  className="w-full h-full object-cover"
-                  animate={{
-                    scale: isActive ? [1, 1.12, 1.08, 1.15] : 1,
-                    opacity: isActive ? 1 : 0.4,
-                    filter: isActive ? 'grayscale(0%)' : 'grayscale(100%)',
-                  }}
-                  transition={isActive ? { duration: 6, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.8, ease: 'easeOut' }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <h3 className="text-sm md:text-base font-bold uppercase tracking-tighter text-white">{project.title}</h3>
-                  <span className="text-primary text-[8px] font-bold tracking-widest uppercase mt-1 inline-block">{project.tags?.[0] || project.client_name || 'Project'}</span>
-                </div>
-                {isActive && (
-                  <div className="absolute inset-0 border-2 border-primary rounded-xl pointer-events-none shadow-[0_0_30px_rgba(230,10,21,0.3)]"></div>
-                )}
-              </div>
-            </motion.div>
-          )
-        })}
-      </div>
-      <div className="flex items-center gap-2 justify-center mt-6">
-        {items.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setActiveIndex(i + itemCount)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${i === activeIndex % itemCount ? 'bg-primary w-6' : 'bg-white/20 hover:bg-white/40'}`}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
 
 

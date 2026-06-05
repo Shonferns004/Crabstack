@@ -54,9 +54,9 @@ export default function Footer() {
                 <span className="text-white/20 text-[9px] font-bold tracking-[0.4em] uppercase mb-4 block">
                   COMMS
                 </span>
-                <p className="text-base md:text-lg font-bold">{s.site_email || 'connect@crabstack.io'}</p>
+                <p className="text-sm md:text-base font-bold">{s.site_email || 'connect@crabstack.io'}</p>
                 {s.site_phone && (
-                  <p className="text-base md:text-lg font-bold mt-2">
+                  <p className="text-sm md:text-base font-bold mt-2">
                     {s.site_phone.split(',').map((n, i) => <span key={i}>{n.trim()}<br /></span>)}
                   </p>
                 )}
@@ -67,12 +67,12 @@ export default function Footer() {
                 </span>
                 {s.site_address ? (
                   s.site_address.split(',').map((line, i) => (
-                    <p key={i} className="text-base md:text-lg font-bold">{line.trim()}</p>
+                    <p key={i} className="text-sm md:text-base font-bold">{line.trim()}</p>
                   ))
                 ) : (
                   <>
-                    <p className="text-base md:text-lg font-bold">Andheri East</p>
-                    <p className="text-base md:text-lg font-bold">Mumbai, Maharashtra</p>
+                    <p className="text-sm md:text-base font-bold">Andheri East</p>
+                    <p className="text-sm md:text-base font-bold">Mumbai, Maharashtra</p>
                   </>
                 )}
               </div>

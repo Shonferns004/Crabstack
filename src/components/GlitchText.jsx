@@ -10,6 +10,7 @@ export default function GlitchText({ text, className = '' }) {
           transform: 'translateX(4px)',
           opacity: 0.5,
           WebkitTextStroke: '1px white',
+          animation: 'glitch1 3s infinite ease-in-out',
         }}
       >
         {text}
@@ -22,6 +23,7 @@ export default function GlitchText({ text, className = '' }) {
           transform: 'translateX(-6px)',
           opacity: 0.4,
           WebkitTextStroke: '1px white',
+          animation: 'glitch2 4s infinite ease-in-out',
         }}
       >
         {text}

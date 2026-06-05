@@ -1,13 +1,7 @@
 import { useState, useEffect } from 'react'
 import GlitchText from '../components/GlitchText'
+import StoryParallax from '../components/StoryParallax'
 import { API_URL } from '../apiUrl'
-
-const filters = [
-  { key: 'all', label: 'All' },
-  { key: 'development', label: 'Development' },
-  { key: 'music', label: 'Music' },
-  { key: 'design', label: 'Design' },
-]
 
 export default function Work() {
   const [projects, setProjects] = useState([])
@@ -20,11 +14,22 @@ export default function Work() {
       .catch(() => setProjects([]))
   }, [])
 
+  const filters = [
+    { key: 'all', label: 'All' },
+    ...new Set(
+      projects.flatMap(p => (p.tags || []).map(t => t.toLowerCase()))
+    ).values(),
+  ].map(t => {
+    const key = typeof t === 'string' ? t : t.key
+    const label = key === 'all' ? 'All' : key.charAt(0).toUpperCase() + key.slice(1)
+    return { key, label }
+  })
+
   const filtered = activeFilter === 'all'
     ? projects
     : projects.filter((p) => {
         const tags = (p.tags || []).map(t => t.toLowerCase())
-        return tags.includes(activeFilter) || tags.includes(activeFilter.replace(/s$/, ''))
+        return tags.includes(activeFilter)
       })
 
   return (
@@ -32,6 +37,7 @@ export default function Work() {
       <div className="grain"></div>
 
       {/* Hero */}
+      <StoryParallax>
       <section className="relative min-h-screen flex items-center justify-center px-4">
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(230,10,21,0.12),transparent_70%)]"></div>
@@ -70,9 +76,11 @@ export default function Work() {
           <div className="h-[1px] w-10 md:w-16 bg-white/20 hidden sm:block"></div>
           <span className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">CORE-v3.0.1</span>
         </div>
-      </section>
+        </section>
+      </StoryParallax>
 
       {/* Stats */}
+      <StoryParallax>
       <section className="py-16 md:py-20 px-6 md:px-[10%] grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0 border-t border-white/5 border-b border-white/5">
         {[
           { num: '10+', label: 'Major Events' },
@@ -89,8 +97,10 @@ export default function Work() {
           </div>
         ))}
       </section>
+      </StoryParallax>
 
       {/* Portfolio Grid */}
+      <StoryParallax>
       <section className="py-16 md:py-24 px-4 md:px-[5%]">
         <div className="flex justify-between items-end mb-12 md:mb-16 flex-col md:flex-row gap-6">
           <h2 className="text-3xl md:text-4xl font-black uppercase border-b-4 border-primary inline-block pb-2">
@@ -140,6 +150,7 @@ export default function Work() {
           ))}
         </div>
       </section>
+      </StoryParallax>
 
       {/* Decorative */}
       <div

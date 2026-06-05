@@ -16,12 +16,7 @@ export default function Navbar() {
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="fixed top-4 md:top-8 left-1/2 -translate-x-1/2 z-[100] w-auto"
-      >
+      <nav className="fixed top-4 md:top-8 left-1/2 -translate-x-1/2 z-[100] w-auto">
         {/* Desktop pill nav */}
         <div className="hidden md:flex pill-nav rounded-full px-8 py-3 items-center gap-10 backdrop-blur-md bg-black/40 border border-white/10">
           {links.map((link) => (
@@ -51,7 +46,7 @@ export default function Navbar() {
             </span>
           </button>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Mobile dropdown menu */}
       <AnimatePresence>

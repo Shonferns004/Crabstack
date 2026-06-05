@@ -6,6 +6,7 @@ import ScrollRotation from '../components/ScrollRotation'
 import TextReveal from '../components/TextReveal'
 import Parallax from '../components/Parallax'
 import GlitchText from '../components/GlitchText'
+import StoryParallax from '../components/StoryParallax'
 
 
 const values = [
@@ -18,8 +19,6 @@ const team = [
   { num: '01', tag: 'CORE', name: 'RAMON\nBAKURI', role: 'Founder & Managing Director', trait: 'Radicalism' },
   { num: '02', tag: 'EXPERIENCE', name: 'BENJAMIN\nAROKIARAJ', role: 'Co-Founder & Director of Creative Strategy', trait: 'Brutalist' },
   { num: '03', tag: 'MOMENTUM', name: 'CROSBY\nDIAS', role: 'Director of Growth & Marketing', trait: 'Precision' },
-  { num: '04', tag: 'EXECUTION', name: 'SHAWN\nEDWARD', role: 'Director of Operations & Finance', trait: 'Impact' },
-  { num: '05', tag: 'INFRASTRUCTURE', name: 'SHAWN\nFERNANDES', role: 'Director of Technical Architecture', trait: 'Velocity' },
 ]
 
 export default function About() {
@@ -28,6 +27,7 @@ export default function About() {
       <div className="grain"></div>
 
       {/* Hero */}
+      <StoryParallax>
       <section className="relative min-h-screen flex items-center justify-center px-4">
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(230,10,21,0.12),transparent_70%)]"></div>
@@ -53,25 +53,8 @@ export default function About() {
             className="text-[clamp(2.5rem,10vw,8rem)] font-bold uppercase select-none tracking-tighter leading-[0.95]"
           >
             WE ARE <br />
-            <span className="relative inline-block text-primary drop-shadow-[0_0_15px_rgba(230,10,21,0.7)]">
-              CRABSTACK
-            </span>
+            <GlitchText text="CRABSTACK" />
           </motion.h1>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4 }}
-            className="mt-12"
-          >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              className="group relative px-10 py-4 bg-neutral-900 border border-primary text-primary font-mono text-sm font-bold uppercase tracking-[0.2em] transition-all hover:bg-primary hover:text-white hover:shadow-[0_0_25px_rgba(230,10,21,0.6)] overflow-hidden cursor-pointer"
-            >
-              <span className="relative z-10">Explore More</span>
-              <div className="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-            </motion.button>
-          </motion.div>
         </div>
 
         <motion.div
@@ -96,8 +79,10 @@ export default function About() {
         <div className="absolute bottom-0 left-0 w-24 md:w-32 h-24 md:h-32 border-b border-l border-white/10 m-6 md:m-12 pointer-events-none"></div>
         <div className="absolute bottom-0 right-0 w-24 md:w-32 h-24 md:h-32 border-b border-r border-white/10 m-6 md:m-12 pointer-events-none"></div>
       </section>
+      </StoryParallax>
 
       {/* Who We Are */}
+      <StoryParallax>
       <ScrollReveal>
         <section className="py-24 md:py-32 border-y border-white/5">
           <div className="max-w-7xl mx-auto px-6">
@@ -115,24 +100,30 @@ export default function About() {
           </div>
         </section>
       </ScrollReveal>
+      </StoryParallax>
 
-      {/* Core Values - Fey-style 3D */}
+      {/* Core Values */}
+      <StoryParallax>
       <ScrollReveal>
         <section className="py-24 md:py-32 bg-white/[0.02]">
           <div className="max-w-7xl mx-auto px-6">
             <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-16 text-center">Our Core Values</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {values.map((v, i) => (
-                <ScrollTransform3D key={i} rotateYRange={[10, 0]} scaleRange={[0.85, 1]} perspective={1000} offset={['0 0.9', '0.2 1']}>
+                <ScrollTransform3D key={i} rotateXRange={[5, 0]} scaleRange={[0.85, 1]} perspective={1000} offset={['0 0.9', '0.2 1']}>
                 <motion.div
-                  whileHover={{ y: -6 }}
-                  className="p-8 rounded-xl border border-white/5 bg-white/[0.03] group hover:border-primary/50 transition-all duration-500"
+                  whileHover={{ scale: 1.02 }}
+                  className="p-8 md:p-10 border border-white/10 bg-black flex flex-col hover:bg-[#E50914]/10 transition-all duration-500 group"
                 >
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                  <div className="w-12 h-12 bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors duration-500">
                     <span className="material-symbols-outlined text-primary group-hover:text-white">{v.icon}</span>
                   </div>
-                  <h3 className="text-2xl font-bold mb-4">{v.title}</h3>
-                  <p className="text-slate-400 leading-relaxed">{v.desc}</p>
+                  <h3 className="text-2xl md:text-3xl font-bold mb-4">{v.title}</h3>
+                  <p className="text-slate-400 leading-relaxed flex-grow">{v.desc}</p>
+                  <div className="flex items-center gap-2 mt-8">
+                    <div className="h-[1px] w-4 bg-[#E50914]"></div>
+                    <span className="text-[10px] font-mono tracking-widest text-[#E50914] uppercase">{['CREATIVE', 'BUILD', 'SCALE'][i]}</span>
+                  </div>
                 </motion.div>
                 </ScrollTransform3D>
               ))}
@@ -140,8 +131,10 @@ export default function About() {
           </div>
         </section>
       </ScrollReveal>
+      </StoryParallax>
 
       {/* What Makes Us Different */}
+      <StoryParallax>
       <ScrollReveal>
         <section className="py-24 md:py-32 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -151,31 +144,43 @@ export default function About() {
                 Launch + Growth Model: We don't just build websites — we help launch, optimize, and scale them strategically.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="flex items-start gap-6 p-8 md:p-10 rounded-2xl bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10">
-                <div className="p-4 bg-primary/20 rounded-full shrink-0">
-                  <span className="material-symbols-outlined text-primary">rocket_launch</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="group p-8 md:p-10 border border-white/10 bg-black flex flex-col hover:bg-[#E50914]/10 transition-all duration-500"
+              >
+                <div className="w-12 h-12 bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors duration-500">
+                  <span className="material-symbols-outlined text-primary group-hover:text-white">rocket_launch</span>
                 </div>
-                <div>
-                  <h4 className="text-xl md:text-2xl font-bold mb-3">Performance-First Builds</h4>
-                  <p className="text-slate-400 leading-relaxed">Optimized from day one. Every asset is compressed, every script is audited, and every interaction is streamlined for peak efficiency.</p>
+                <h4 className="text-xl md:text-2xl font-bold mb-3">Performance-First Builds</h4>
+                <p className="text-slate-400 leading-relaxed flex-grow">Optimized from day one. Every asset is compressed, every script is audited, and every interaction is streamlined for peak efficiency.</p>
+                <div className="flex items-center gap-2 mt-8">
+                  <div className="h-[1px] w-4 bg-[#E50914]"></div>
+                  <span className="text-[10px] font-mono tracking-widest text-[#E50914] uppercase">SPEED</span>
                 </div>
-              </div>
-              <div className="flex items-start gap-6 p-8 md:p-10 rounded-2xl bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10">
-                <div className="p-4 bg-primary/20 rounded-full shrink-0">
-                  <span className="material-symbols-outlined text-primary">ads_click</span>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="group p-8 md:p-10 border border-white/10 bg-black flex flex-col hover:bg-[#E50914]/10 transition-all duration-500"
+              >
+                <div className="w-12 h-12 bg-primary/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors duration-500">
+                  <span className="material-symbols-outlined text-primary group-hover:text-white">ads_click</span>
                 </div>
-                <div>
-                  <h4 className="text-xl md:text-2xl font-bold mb-3">Conversion-Focused Design</h4>
-                  <p className="text-slate-400 leading-relaxed">Designed to generate results. We use psychological triggers and intuitive UX patterns to guide users toward your primary goals.</p>
+                <h4 className="text-xl md:text-2xl font-bold mb-3">Conversion-Focused Design</h4>
+                <p className="text-slate-400 leading-relaxed flex-grow">Designed to generate results. We use psychological triggers and intuitive UX patterns to guide users toward your primary goals.</p>
+                <div className="flex items-center gap-2 mt-8">
+                  <div className="h-[1px] w-4 bg-[#E50914]"></div>
+                  <span className="text-[10px] font-mono tracking-widest text-[#E50914] uppercase">IMPACT</span>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
       </ScrollReveal>
+      </StoryParallax>
 
       {/* Our Process - with ScrollRotation on circles */}
+      <StoryParallax>
       <ScrollReveal>
         <section className="py-24 md:py-32 bg-primary/5">
           <div className="max-w-7xl mx-auto px-6">
@@ -205,8 +210,10 @@ export default function About() {
           </div>
         </section>
       </ScrollReveal>
+      </StoryParallax>
 
       {/* Team - Fey-style 3D */}
+      <StoryParallax>
       <ScrollReveal>
         <section className="py-24 md:py-32 bg-[#000000] text-white overflow-hidden relative">
           <div className="max-w-7xl mx-auto px-6 relative">
@@ -266,8 +273,10 @@ export default function About() {
           </div>
         </section>
       </ScrollReveal>
+      </StoryParallax>
 
       {/* CTA with Parallax */}
+      <StoryParallax>
       <ScrollReveal>
         <Parallax speed={0.1}>
         <section className="py-24 md:py-32 bg-primary">
@@ -283,6 +292,7 @@ export default function About() {
         </section>
         </Parallax>
       </ScrollReveal>
+      </StoryParallax>
 
       {/* Decorative Grids */}
       <div
