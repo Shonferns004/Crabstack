@@ -254,7 +254,7 @@ export default function Home() {
             </p>
             <div className="grid grid-cols-2 gap-8">
               <div className="p-6 border-l-2 border-primary bg-primary/5">
-                <div className="text-4xl font-bold text-white">{projects.length}+</div>
+                <div className="text-4xl font-bold text-white">{projects.filter(p => !p.tags?.some(t => t.toLowerCase().includes('event'))).length}+</div>
                 <div className="text-xs font-mono uppercase text-slate-500 mt-2">Projects Delivered</div>
               </div>
               <div className="p-6 border-l-2 border-primary bg-primary/5">
