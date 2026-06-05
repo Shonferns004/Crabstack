@@ -75,7 +75,7 @@ function PhaseStep({ phase, index, sectionProgress }) {
         <>
           <div className="text-right pr-12 hidden md:block">
             <motion.span style={{ opacity: glow, color: iconColor }} className="font-mono text-sm font-bold uppercase">Phase {phase.num}</motion.span>
-            <motion.h4 style={{ opacity: glow }} className="text-2xl font-bold uppercase mt-1">{phase.title}</motion.h4>
+            <motion.h3 style={{ opacity: glow }} className="text-2xl font-bold uppercase mt-1">{phase.title}</motion.h3>
           </div>
           <motion.div
             style={{ scale, borderColor: dotBorderColor, boxShadow: dotShadow }}
@@ -108,7 +108,7 @@ function PhaseStep({ phase, index, sectionProgress }) {
           </motion.div>
           <div className="text-left pl-12 hidden md:block order-1 md:order-2">
             <motion.span style={{ opacity: glow }} className="font-mono text-sm font-bold uppercase">Phase {phase.num}</motion.span>
-            <motion.h4 style={{ opacity: glow }} className="text-2xl font-bold uppercase mt-1">{phase.title}</motion.h4>
+            <motion.h3 style={{ opacity: glow }} className="text-2xl font-bold uppercase mt-1">{phase.title}</motion.h3>
           </div>
         </>
       )}

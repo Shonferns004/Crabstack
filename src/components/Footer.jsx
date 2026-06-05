@@ -93,7 +93,7 @@ export default function Footer() {
                   className="w-full bg-transparent border-b border-white/20 py-4 pr-24 focus:outline-none focus:border-primary text-sm tracking-widest uppercase transition-colors"
                   required
                 />
-                <button className="absolute right-0 bottom-2 text-primary font-bold text-[10px] tracking-widest cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center">
+                <button className="absolute right-0 bottom-2 text-red-400 font-bold text-[10px] tracking-widest cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center">
                   {status === 'sending' ? 'SENDING...' : status === 'success' ? 'SENT' : 'CONNECT'}
                 </button>
               </form>

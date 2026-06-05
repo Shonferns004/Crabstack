@@ -35,6 +35,7 @@ export default function App() {
   return (
     <div className="bg-black min-h-screen">
       <Navbar />
+      <main>
       <AnimatePresence mode="wait">
         <motion.div
           key={location.pathname}
@@ -54,6 +55,7 @@ export default function App() {
           </Routes>
         </motion.div>
       </AnimatePresence>
+      </main>
       <Footer />
     </div>
   )
