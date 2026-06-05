@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import ScrollReveal from '../components/ScrollReveal'
 import ScrollTransform3D from '../components/ScrollTransform3D'
 import Parallax from '../components/Parallax'
@@ -169,12 +170,14 @@ export default function Services() {
           <div className="max-w-4xl mx-auto px-6 text-center">
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-10">READY TO MAKE YOUR VISION TRUE?</h2>
             <div className="flex flex-col md:flex-row gap-6 justify-center">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                className="bg-black text-white px-10 md:px-12 py-5 rounded-lg text-lg font-bold hover:bg-black/80 transition-all shadow-2xl cursor-pointer"
-              >
-                Initialize Project
-              </motion.button>
+              <Link to="/contact">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  className="bg-black text-white px-10 md:px-12 py-5 rounded-lg text-lg font-bold hover:bg-black/80 transition-all shadow-2xl cursor-pointer"
+                >
+                  Initialize Project
+                </motion.button>
+              </Link>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 className="border border-black/40 text-white px-10 md:px-12 py-5 rounded-lg font-bold transition-all hover:bg-black/20 cursor-pointer"
