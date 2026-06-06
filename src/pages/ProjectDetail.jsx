@@ -110,59 +110,61 @@ export default function ProjectDetail() {
           <Link to="/work" className="inline-flex items-center gap-2 text-white/50 hover:text-primary text-xs font-mono uppercase tracking-widest mb-8 transition-colors">
             <span>←</span> Back to Work
           </Link>
-          <div className="grid md:grid-cols-5 gap-10 md:gap-16">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <span className="h-px w-8 bg-primary"></span>
+              <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">
+                {project.tags?.[0] || project.client_name || 'Project'}
+              </span>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-white">
+              {project.title}
+            </h1>
+            {project.client_name && (
+              <p className="text-white/50 text-sm font-mono mt-4">
+                Client: <span className="text-white/80">{project.client_name}</span>
+              </p>
+            )}
+            <div className="flex gap-4 mt-8">
+              {project.preview_link && project.tags?.some(t => t.toLowerCase() === 'website') && (
+                <a href={project.preview_link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-primary hover:bg-primary/80 text-white px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition">
+                  Visit Website →
+                </a>
+              )}
+              {project.github_repo && project.tags?.some(t => t.toLowerCase() === 'app') && (
+                <a href={project.github_repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider border border-zinc-700 transition">
+                  View Source Code →
+                </a>
+              )}
+            </div>
+          </motion.div>
+
+          {project.image_url && (
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.15 }}
+              className="mt-12 rounded-xl overflow-hidden border border-white/5 shadow-2xl"
+            >
+              <img src={project.image_url} alt={project.title} className="w-full h-auto object-cover" />
+            </motion.div>
+          )}
+
+          {project.description && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="md:col-span-3"
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="mt-8 bg-white/[0.03] border border-white/5 rounded-xl p-6 md:p-8 max-w-4xl"
             >
-              <div className="flex items-center gap-3 mb-3">
-                <span className="h-px w-8 bg-primary"></span>
-                <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">
-                  {project.tags?.[0] || project.client_name || 'Project'}
-                </span>
-              </div>
-              <h1 className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-white">
-                {project.title}
-              </h1>
-              {project.client_name && (
-                <p className="text-white/50 text-sm font-mono mt-4">
-                  Client: <span className="text-white/80">{project.client_name}</span>
-                </p>
-              )}
-              <div className="flex gap-4 mt-8">
-                {project.preview_link && project.tags?.some(t => t.toLowerCase() === 'website') && (
-                  <a href={project.preview_link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-primary hover:bg-primary/80 text-white px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition">
-                    Visit Website →
-                  </a>
-                )}
-                {project.github_repo && project.tags?.some(t => t.toLowerCase() === 'app') && (
-                  <a href={project.github_repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider border border-zinc-700 transition">
-                    View Source Code →
-                  </a>
-                )}
-              </div>
+              <p className="text-white/70 text-sm leading-relaxed">{project.description}</p>
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="md:col-span-2 space-y-6"
-            >
-              {project.image_url && (
-                <div className="rounded-xl overflow-hidden border border-white/5 shadow-2xl">
-                  <img src={project.image_url} alt={project.title} className="w-full h-auto object-cover" />
-                </div>
-              )}
-              {project.description && (
-                <div className="bg-white/[0.03] border border-white/5 rounded-xl p-6">
-                  <p className="text-white/70 text-sm leading-relaxed">{project.description}</p>
-                </div>
-              )}
-            </motion.div>
-          </div>
+          )}
         </div>
       </section>
 
