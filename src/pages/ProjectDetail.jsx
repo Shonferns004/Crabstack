@@ -143,6 +143,56 @@ export default function ProjectDetail() {
           </div>
         </section>
 
+      {/* Website Images */}
+      {websiteImages.length > 0 && (
+        <section className="py-16 md:py-24 px-6 border-t border-white/5 bg-white/[0.01]">
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-10">
+              <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">Website</span>
+              <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-white mt-2">Website Screenshots</h2>
+            </div>
+            <div className="space-y-12">
+              {websiteImages.map((img, i) => (
+                <motion.div
+                  key={img.id || i}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.15 }}
+                >
+                  <BrowserFrame src={img.image_url} alt={`${project.title} website ${i + 1}`} />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Mobile Images */}
+      {mobileImages.length > 0 && (
+        <section className="py-16 md:py-24 px-6 border-t border-white/5">
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-10">
+              <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">Mobile</span>
+              <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-white mt-2">Mobile Screenshots</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {mobileImages.map((img, i) => (
+                <motion.div
+                  key={img.id || i}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.15 }}
+                >
+                  <MobileFrame src={img.image_url} alt={`${project.title} mobile ${i + 1}`} />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Poster Images */}
       {posterImages.length > 0 && (
         <section className="py-16 md:py-24 px-6 border-t border-white/5 bg-white/[0.01]">
