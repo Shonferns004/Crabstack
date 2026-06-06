@@ -97,68 +97,97 @@ export default function ProjectDetail() {
       <div className="grain"></div>
 
       {/* Hero */}
-      <section className="relative min-h-[60vh] flex items-end pb-16 md:pb-24">
+      <section className="relative min-h-[70vh] flex items-end pb-20 md:pb-32">
         <div className="absolute inset-0 -z-10">
           {project.image_url && (
-            <img src={project.image_url} alt={project.title} className="w-full h-full object-cover opacity-30" />
+            <>
+              <img src={project.image_url} alt={project.title} className="w-full h-full object-cover opacity-20" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+            </>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
         </div>
         <div className="max-w-7xl mx-auto px-6 w-full">
-          <Link to="/work" className="inline-flex items-center gap-2 text-white/50 hover:text-primary text-xs font-mono uppercase tracking-widest mb-6 transition-colors">
+          <Link to="/work" className="inline-flex items-center gap-2 text-white/50 hover:text-primary text-xs font-mono uppercase tracking-widest mb-8 transition-colors">
             <span>←</span> Back to Work
           </Link>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="flex items-center gap-3 mb-3">
-              <span className="h-px w-8 bg-primary"></span>
-              <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">
-                {project.tags?.[0] || project.client_name || 'Project'}
-              </span>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-white">
-              {project.title}
-            </h1>
-            {project.client_name && (
-              <p className="text-white/50 text-sm font-mono mt-4">
-                Client: <span className="text-white/80">{project.client_name}</span>
-              </p>
-            )}
-            <div className="flex gap-4 mt-8">
-              {project.preview_link && project.tags?.some(t => t.toLowerCase() === 'website') && (
-                <a href={project.preview_link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-primary hover:bg-primary/80 text-white px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition">
-                  Visit Website →
-                </a>
+          <div className="grid md:grid-cols-5 gap-10 md:gap-16">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="md:col-span-3"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <span className="h-px w-8 bg-primary"></span>
+                <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">
+                  {project.tags?.[0] || project.client_name || 'Project'}
+                </span>
+              </div>
+              <h1 className="text-5xl md:text-7xl font-bold uppercase tracking-tighter text-white">
+                {project.title}
+              </h1>
+              {project.client_name && (
+                <p className="text-white/50 text-sm font-mono mt-4">
+                  Client: <span className="text-white/80">{project.client_name}</span>
+                </p>
               )}
-              {project.github_repo && project.tags?.some(t => t.toLowerCase() === 'app') && (
-                <a href={project.github_repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider border border-zinc-700 transition">
-                  View Source Code →
-                </a>
-              )}
+              <div className="flex gap-4 mt-8">
+                {project.preview_link && project.tags?.some(t => t.toLowerCase() === 'website') && (
+                  <a href={project.preview_link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-primary hover:bg-primary/80 text-white px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition">
+                    Visit Website →
+                  </a>
+                )}
+                {project.github_repo && project.tags?.some(t => t.toLowerCase() === 'app') && (
+                  <a href={project.github_repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider border border-zinc-700 transition">
+                    View Source Code →
+                  </a>
+                )}
               </div>
             </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="md:col-span-2 space-y-6"
+            >
+              {project.image_url && (
+                <div className="rounded-xl overflow-hidden border border-white/5 shadow-2xl">
+                  <img src={project.image_url} alt={project.title} className="w-full h-auto object-cover" />
+                </div>
+              )}
+              {project.description && (
+                <div className="bg-white/[0.03] border border-white/5 rounded-xl p-6">
+                  <p className="text-white/70 text-sm leading-relaxed">{project.description}</p>
+                </div>
+              )}
+            </motion.div>
           </div>
-        </section>
+        </div>
+      </section>
 
       {/* Website Images */}
       {websiteImages.length > 0 && (
         <section className="py-16 md:py-24 px-6 border-t border-white/5 bg-white/[0.01]">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="mb-10"
+            >
               <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">Website</span>
               <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-white mt-2">Website Screenshots</h2>
-            </div>
+            </motion.div>
             <div className="space-y-12">
               {websiteImages.map((img, i) => (
                 <motion.div
                   key={img.id || i}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.15 }}
+                  initial={{ opacity: 0, y: 60, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: '-100px' }}
+                  transition={{ duration: 0.7, delay: i * 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
                 >
                   <BrowserFrame src={img.image_url} alt={`${project.title} website ${i + 1}`} />
                 </motion.div>
@@ -172,18 +201,25 @@ export default function ProjectDetail() {
       {mobileImages.length > 0 && (
         <section className="py-16 md:py-24 px-6 border-t border-white/5">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="mb-10"
+            >
               <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">Mobile</span>
               <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-white mt-2">Mobile Screenshots</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </motion.div>
+            <div className="columns-1 md:columns-2 lg:columns-3 gap-8 [column-fill:_balance]">
               {mobileImages.map((img, i) => (
                 <motion.div
                   key={img.id || i}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.15 }}
+                  initial={{ opacity: 0, y: 50, rotateX: 5 }}
+                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.6, delay: i * 0.1, ease: 'easeOut' }}
+                  className="break-inside-avoid mb-8"
                 >
                   <MobileFrame src={img.image_url} alt={`${project.title} mobile ${i + 1}`} />
                 </motion.div>
@@ -197,23 +233,36 @@ export default function ProjectDetail() {
       {posterImages.length > 0 && (
         <section className="py-16 md:py-24 px-6 border-t border-white/5 bg-white/[0.01]">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="mb-10"
+            >
               <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">Posters</span>
-              <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-white mt-2">Posters</h2>
-            </div>
-            <div className="space-y-12">
-              {posterImages.map((img, i) => (
-                <motion.div
-                  key={img.id || i}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.15 }}
-                  className="rounded-xl overflow-hidden border border-white/5"
-                >
-                  <img src={img.image_url} alt={`${project.title} poster ${i + 1}`} className="w-full h-auto object-cover" />
-                </motion.div>
-              ))}
+              <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-white mt-2">Poster Gallery</h2>
+            </motion.div>
+            <div className="space-y-8 md:space-y-12">
+              {posterImages.map((img, i) => {
+                const isEven = i % 2 === 0
+                return (
+                  <motion.div
+                    key={img.id || i}
+                    initial={{ opacity: 0, x: isEven ? -60 : 60, rotate: isEven ? -2 : 2 }}
+                    whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+                    viewport={{ once: true, margin: '-100px' }}
+                    transition={{
+                      duration: 0.8,
+                      delay: i * 0.12,
+                      ease: [0.25, 0.46, 0.45, 0.94],
+                    }}
+                    className={`rounded-xl overflow-hidden border border-white/5 shadow-lg hover:shadow-2xl transition-shadow duration-500 ${isEven ? 'md:ml-[5%]' : 'md:mr-[5%]'} md:w-[90%]`}
+                  >
+                    <img src={img.image_url} alt={`${project.title} poster ${i + 1}`} className="w-full h-auto object-cover" />
+                  </motion.div>
+                )
+              })}
             </div>
           </div>
         </section>
@@ -223,23 +272,52 @@ export default function ProjectDetail() {
       {eventImages.length > 0 && (
         <section className="py-16 md:py-24 px-6 border-t border-white/5">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="mb-10"
+            >
               <span className="text-primary text-[10px] font-bold tracking-[0.4em] uppercase">Event Gallery</span>
               <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-white mt-2">Event Images</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {eventImages.map((img, i) => (
-                <motion.div
-                  key={img.id || i}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.15 }}
-                  className="rounded-xl overflow-hidden border border-white/5 aspect-[4/3]"
-                >
-                  <img src={img.image_url} alt={`${project.title} event ${i + 1}`} className="w-full h-full object-cover" />
-                </motion.div>
-              ))}
+            </motion.div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              {eventImages.map((img, i) => {
+                const sizes = [
+                  'md:col-span-2 md:row-span-2',
+                  'md:col-span-1 md:row-span-1',
+                  'md:col-span-1 md:row-span-2',
+                  'md:col-span-2 md:row-span-1',
+                  'md:col-span-1 md:row-span-1',
+                  'md:col-span-1 md:row-span-1',
+                ]
+                const span = sizes[i % sizes.length]
+                return (
+                  <motion.div
+                    key={img.id || i}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, margin: '-50px' }}
+                    transition={{
+                      duration: 0.5,
+                      delay: i * 0.08,
+                      ease: 'easeOut',
+                    }}
+                    className={`rounded-xl overflow-hidden border border-white/5 group relative ${span}`}
+                  >
+                    <img
+                      src={img.image_url}
+                      alt={`${project.title} event ${i + 1}`}
+                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <span className="text-white/80 text-xs font-mono">{project.title} — Event {i + 1}</span>
+                    </div>
+                  </motion.div>
+                )
+              })}
             </div>
           </div>
         </section>
