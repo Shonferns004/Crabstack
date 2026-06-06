@@ -133,7 +133,7 @@ export default function Work() {
           {filtered.map((project, i) => (
             <Link
               key={project.id || project.title}
-               to={`/work/${slugify(project.title)}`}
+               to={`/work/${project.id}/${slugify(project.title)}`}
               className="relative bg-[#111] h-[320px] md:h-[400px] overflow-hidden flex flex-col justify-end p-6 md:p-8 group transition-all duration-300 cursor-pointer"
             >
               <img

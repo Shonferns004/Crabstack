@@ -40,7 +40,7 @@ function BrowserFrame({ src, alt }) {
 }
 
 export default function ProjectDetail() {
-  const { id: slug } = useParams()
+  const { projectId } = useParams()
   const [project, setProject] = useState(null)
   const [images, setImages] = useState([])
   const [otherProjects, setOtherProjects] = useState([])
@@ -48,26 +48,26 @@ export default function ProjectDetail() {
 
   useEffect(() => {
     setLoading(true)
-    fetch(`${API_URL}/projects`)
-      .then(r => r.json())
-      .then(all => {
-        const list = Array.isArray(all) ? all : []
-        const found = list.find(p => slugify(p.title) === slug)
-        if (!found) {
-          setProject(null)
-          setLoading(false)
-          return
-        }
+    fetch(`${API_URL}/projects/${projectId}`)
+      .then(r => {
+        if (!r.ok) throw new Error('not found')
+        return r.json()
+      })
+      .then(found => {
         setProject(found)
-        setOtherProjects(list.filter(p => p.id !== found.id).slice(0, 3))
-        return fetch(`${API_URL}/projects/${found.id}/images`).then(r => r.json())
+        return Promise.all([
+          fetch(`${API_URL}/projects/${found.id}/images`).then(r => r.json()),
+          fetch(`${API_URL}/projects`).then(r => r.json()),
+        ])
       })
-      .then(imgs => {
+      .then(([imgs, all]) => {
         setImages(Array.isArray(imgs) ? imgs : [])
+        const list = Array.isArray(all) ? all : []
+        setOtherProjects(list.filter(p => p.id !== projectId).slice(0, 3))
       })
-      .catch(() => {})
+      .catch(() => setProject(null))
       .finally(() => setLoading(false))
-  }, [slug])
+  }, [projectId])
 
   if (loading) {
     return (
@@ -271,7 +271,7 @@ export default function ProjectDetail() {
               {otherProjects.map((p, i) => (
                 <Link
                   key={p.id}
-                  to={`/work/${slugify(p.title)}`}
+                  to={`/work/${p.id}/${slugify(p.title)}`}
                   className="group relative h-[260px] overflow-hidden flex flex-col justify-end p-6 bg-[#111]"
                 >
                   <img
